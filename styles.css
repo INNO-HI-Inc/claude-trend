@@ -226,6 +226,7 @@ main {
 /* ============ CARD ============ */
 .card {
   background: var(--card);
+  border: 1px solid #e8e3d3;
   border-radius: 20px;
   padding: 24px 22px 20px;
   display: flex;
@@ -233,9 +234,10 @@ main {
   gap: 12px;
   position: relative;
   cursor: pointer;
-  transition: background .18s, transform .18s;
+  transition: background .18s, border-color .18s, transform .18s;
   height: 360px;
 }
+.card:hover { border-color: #d6d0bd; }
 .card:hover {
   background: var(--card-hover);
   transform: translateY(-2px);
