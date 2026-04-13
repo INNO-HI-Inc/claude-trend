@@ -15,20 +15,41 @@ async function load() {
   render();
 }
 
+function nextMonday(from) {
+  const d = new Date(from);
+  const day = d.getDay(); // 0=Sun..6=Sat
+  const add = day === 1 ? 7 : ((8 - day) % 7 || 7);
+  d.setDate(d.getDate() + add);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+function fmtDate(d) {
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`;
+}
+
 function updateMeta() {
   const d = STATE.data || {};
   const rising = d.rising || [];
   const classic = d.classic || [];
   const total = rising.length + classic.length;
-  const totalEl = document.getElementById("inline-total");
-  const risingEl = document.getElementById("inline-rising");
-  if (totalEl) totalEl.textContent = total;
-  if (risingEl) risingEl.textContent = rising.length;
-  const updEl = document.getElementById("inline-updated");
-  if (updEl && d.generated_at) {
-    const t = new Date(d.generated_at);
-    const dateStr = `${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}`;
-    updEl.textContent = `${dateStr} 업데이트 · 매주 월요일`;
+  document.getElementById("inline-total").textContent = total;
+  document.getElementById("inline-rising").textContent = rising.length;
+
+  const weekLabel = document.getElementById("week-label");
+  const nextLabel = document.getElementById("inline-next");
+
+  if (d.generated_at) {
+    const updated = new Date(d.generated_at);
+    const now = new Date();
+    const next = nextMonday(updated);
+    const daysLeft = Math.max(0, Math.ceil((next - now) / (1000 * 60 * 60 * 24)));
+
+    if (weekLabel) weekLabel.textContent = `${fmtDate(updated)} 업데이트`;
+    if (nextLabel) {
+      if (daysLeft === 0) nextLabel.textContent = "오늘 갱신 예정";
+      else if (daysLeft === 1) nextLabel.textContent = "내일 갱신";
+      else nextLabel.textContent = `다음 갱신 ${daysLeft}일 후 (${fmtDate(next)} 월요일)`;
+    }
   }
 }
 

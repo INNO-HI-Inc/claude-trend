@@ -24,12 +24,18 @@
 
 <header class="hero">
   <div class="hero-main">
-    <a class="brand-chip" href="https://claude.com/code" target="_blank" rel="noopener">
-      <svg class="brand-mark" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z" fill="#D97757"/>
-      </svg>
-      <span>Claude Code</span>
-    </a>
+    <div class="brand-row">
+      <a class="brand-chip" href="https://claude.com/code" target="_blank" rel="noopener">
+        <svg class="brand-mark" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z" fill="#D97757"/>
+        </svg>
+        <span>Claude Code</span>
+      </a>
+      <span class="week-chip">
+        <span class="week-dot"></span>
+        <span id="week-label">이번 주 업데이트</span>
+      </span>
+    </div>
     <h1>이번 주 Claude Code에서<br/>뭐가 <em class="hl-mint">뜨고</em>, 뭐가 이미 <em class="hl-lemon">자리잡았나</em>.</h1>
     <p class="subtitle">
       GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 매주 수집한 <strong>에이전트 · 스킬 · 하네스 · MCP</strong> 주간 인덱스.
@@ -39,7 +45,7 @@
       <span class="dot">·</span>
       <span>이 중 <strong id="inline-rising">0</strong>개가 이번 주 급상승</span>
       <span class="dot">·</span>
-      <span id="inline-updated">매주 월요일 갱신</span>
+      <span id="inline-next">다음 갱신 — 월요일</span>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">

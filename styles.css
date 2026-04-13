@@ -64,6 +64,13 @@ body {
   .hero { grid-template-columns: 1fr; gap: 24px; }
   .hero-art { width: 120px; justify-self: end; order: -1; margin-bottom: -24px; }
 }
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
 .brand-chip {
   display: inline-flex;
   align-items: center;
@@ -76,9 +83,30 @@ body {
   font-weight: 600;
   color: var(--ink-2);
   text-decoration: none;
-  margin-bottom: 28px;
   transition: all .15s;
   letter-spacing: -0.005em;
+}
+.week-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  background: var(--hl-mint);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.week-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ink);
+  animation: week-blink 1.8s ease-in-out infinite;
+}
+@keyframes week-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 .brand-chip:hover {
   border-color: var(--accent);
