@@ -47,7 +47,7 @@ body {
 .hero {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 88px 32px 48px;
+  padding: 96px 32px 72px;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 40px;
@@ -69,7 +69,7 @@ body {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  margin-bottom: 44px;
 }
 .brand-chip {
   display: inline-flex;
@@ -122,7 +122,7 @@ body {
   letter-spacing: -0.035em;
   line-height: 1.4;
   color: var(--ink);
-  margin-bottom: 22px;
+  margin-bottom: 36px;
   max-width: 900px;
 }
 .hero h1 em {
@@ -149,7 +149,7 @@ body {
   max-width: 680px;
   line-height: 1.75;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 .subtitle strong { color: var(--ink); font-weight: 700; }
 
