@@ -32,21 +32,12 @@ function updateMeta() {
   }
 }
 
-const TAB_META = {
-  rising: { title: "이번 주 뜨는", desc: "최근 30일 급상승한 프로젝트와 커뮤니티에서 회자되는 것들" },
-  classic: { title: "이미 유명한", desc: "꾸준히 언급되고 레퍼런스로 자리잡은 필수 프로젝트" },
-};
-function updateSectionHead() {
-  const m = TAB_META[STATE.tab] || TAB_META.rising;
-  const title = document.getElementById("section-title");
-  const desc = document.getElementById("section-desc");
-  const count = document.getElementById("section-count");
-  if (title) title.textContent = m.title;
-  if (desc) desc.textContent = m.desc;
-  if (count) {
-    const d = STATE.data || {};
-    count.textContent = (d[STATE.tab] || []).length;
-  }
+function updateTabCounts() {
+  const d = STATE.data || {};
+  const r = document.getElementById("rising-count");
+  const c = document.getElementById("classic-count");
+  if (r) r.textContent = (d.rising || []).length;
+  if (c) c.textContent = (d.classic || []).length;
 }
 
 function matches(item) {
@@ -249,7 +240,7 @@ function render() {
   const d = STATE.data || {};
   const list = (d[STATE.tab] || []).filter(matches);
   const el = document.getElementById("grid");
-  updateSectionHead();
+  updateTabCounts();
   if (list.length === 0) {
     el.innerHTML = `<div class="empty">검색 결과 없음</div>`;
   } else {

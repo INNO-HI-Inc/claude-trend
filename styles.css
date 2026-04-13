@@ -39,46 +39,47 @@ body {
 .hero {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 96px 32px 56px;
+  padding: 88px 32px 48px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  margin-bottom: 26px;
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  display: inline-block;
 }
 .hero h1 {
-  font-size: clamp(36px, 5.5vw, 64px);
+  font-size: clamp(34px, 5.2vw, 60px);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.2;
   color: var(--ink);
-  margin-bottom: 24px;
-  max-width: 980px;
+  margin-bottom: 22px;
+  max-width: 900px;
 }
-.hero h1 em {
-  font-style: normal;
-  font-weight: 700;
-  position: relative;
-  display: inline-block;
-  padding: 0 4px;
-  z-index: 1;
-}
-.hero h1 em::after {
-  content: "";
-  position: absolute;
-  inset: 0 -4px;
-  border-radius: 6px;
-  z-index: -1;
-}
-.hero h1 em.hl-mint::after { background: var(--hl-mint); transform: rotate(-0.8deg); }
-.hero h1 em.hl-lemon::after { background: var(--hl-lemon); transform: rotate(0.5deg); }
 
 .subtitle {
-  font-size: clamp(14.5px, 1.1vw, 16.5px);
-  color: var(--muted);
-  max-width: 660px;
-  line-height: 1.7;
+  font-size: clamp(15px, 1.15vw, 17px);
+  color: var(--ink-2);
+  max-width: 680px;
+  line-height: 1.75;
   font-weight: 400;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
-.subtitle strong { color: var(--ink); font-weight: 600; }
+.subtitle strong { color: var(--ink); font-weight: 700; }
 
-.hero-inline {
+.hero-stats {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -86,13 +87,13 @@ body {
   font-size: 13px;
   color: var(--muted);
 }
-.hero-inline strong {
+.hero-stats strong {
   color: var(--ink);
   font-weight: 700;
   margin-right: 2px;
   font-variant-numeric: tabular-nums;
 }
-.hero-inline .dot { color: var(--soft); }
+.hero-stats .dot { color: var(--soft); }
 
 /* ============ CONTROLS ============ */
 .controls {
@@ -116,19 +117,33 @@ body {
   border-radius: 100px;
 }
 .tab {
-  padding: 8px 18px;
+  padding: 9px 18px;
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
   border-radius: 100px;
   cursor: pointer;
   transition: all .16s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 .tab:hover { color: var(--ink); }
 .tab.active { background: var(--ink); color: var(--card); }
+.tab-emoji { font-size: 13px; }
+.tab-count {
+  font-size: 11.5px;
+  padding: 1px 7px;
+  background: rgba(0,0,0,0.08);
+  color: var(--muted);
+  border-radius: 100px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.tab.active .tab-count { background: rgba(255,255,255,0.18); color: var(--card); }
 
 .search-wrap {
   flex: 1;
@@ -153,50 +168,10 @@ body {
 }
 #search::placeholder { color: var(--soft); }
 
-/* ============ SECTION HEAD ============ */
 main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 8px 32px 96px;
-}
-.section-head {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 16px;
-  align-items: baseline;
-  padding: 16px 4px 20px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--pill);
-}
-.section-head h2 {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.section-head p {
-  font-size: 13.5px;
-  color: var(--muted);
-  line-height: 1.5;
-  max-width: 520px;
-}
-.section-count {
-  font-size: 13px;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.section-count::before { content: "total "; color: var(--soft); }
-
-@media (max-width: 720px) {
-  .section-head {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    gap: 8px 12px;
-  }
-  .section-head p { grid-column: 1 / -1; }
+  padding: 16px 32px 96px;
 }
 
 /* ============ GRID (bento editorial) ============ */
