@@ -169,6 +169,7 @@ function modalHTML(item, tab, rank) {
     </div>
     <h2>${escapeHTML(item.title_ko || item.id)}</h2>
     ${item.catchphrase ? `<p class="m-catch">${escapeHTML(item.catchphrase)}</p>` : ""}
+    ${modalSourcesSection(item)}
     ${badges ? `<div class="m-badges">${badges}</div>` : ""}
     ${item.summary_ko ? `<div class="m-section"><div class="m-label">어떤 프로젝트인가</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
     ${feats ? `<div class="m-section"><div class="m-label">핵심 기능</div><ul class="m-features">${feats}</ul></div>` : ""}

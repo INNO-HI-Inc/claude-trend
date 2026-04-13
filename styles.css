@@ -102,14 +102,14 @@ body {
 .ctrl-link {
   display: inline-flex;
   align-items: center;
-  padding: 10px 16px;
+  padding: 11px 20px;
   font-family: inherit;
   font-size: 13.5px;
   font-weight: 600;
   color: var(--ink-2);
   background: var(--pill);
   border: none;
-  border-radius: 100px;
+  border-radius: 999px;
   text-decoration: none;
   cursor: pointer;
   transition: all .15s;
