@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <style>
+      .title { font: 700 92px "Pretendard", -apple-system, sans-serif; letter-spacing: -0.035em; fill: #0e0e0e; }
+      .sub { font: 500 32px "Pretendard", -apple-system, sans-serif; fill: #3a3a38; }
+      .chip { font: 700 22px "Pretendard", -apple-system, sans-serif; }
+      .meta { font: 600 24px "Pretendard", -apple-system, sans-serif; fill: #6b6860; }
+      .brand { font: 700 28px "Pretendard", -apple-system, sans-serif; fill: #0e0e0e; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="#fbfaf6"/>
+
+  <!-- brand row top-left -->
+  <g transform="translate(80, 80)">
+    <rect x="0" y="0" width="210" height="42" rx="21" fill="#ffffff" stroke="#f2efe5" stroke-width="1.5"/>
+    <g transform="translate(14, 11) scale(0.83)">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z"
+            fill="#D97757"/>
+    </g>
+    <text x="50" y="28" class="chip" fill="#2b2b2b">Claude Code · Weekly</text>
+  </g>
+
+  <!-- big logo on right -->
+  <g transform="translate(860, 90) scale(11)">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z"
+          fill="#D97757"/>
+  </g>
+
+  <!-- headline with highlight blobs -->
+  <g transform="translate(80, 240)">
+    <!-- line 1 -->
+    <text x="0" y="0" class="title">이번 주 Claude Code에서</text>
+
+    <!-- line 2 with highlight blobs -->
+    <g transform="translate(0, 110)">
+      <!-- mint blob behind 뜨고 -->
+      <rect x="92" y="-68" width="132" height="96" rx="14" fill="#d8edd0" transform="rotate(-0.8 158 -20)"/>
+      <!-- lemon blob behind 자리잡았나 -->
+      <rect x="540" y="-68" width="310" height="96" rx="14" fill="#ffeca0" transform="rotate(0.5 695 -20)"/>
+      <text x="0" y="0" class="title">뭐가 뜨고, 뭐가 이미 자리잡았나.</text>
+    </g>
+  </g>
+
+  <!-- subtitle -->
+  <text x="80" y="495" class="sub">GitHub과 개발자 커뮤니티에서 매주 수집한</text>
+  <text x="80" y="540" class="sub">에이전트 · 스킬 · 하네스 · MCP 주간 인덱스.</text>
+
+  <!-- bottom bar -->
+  <rect x="0" y="600" width="1200" height="30" fill="#D97757"/>
+  <text x="80" y="598" class="meta">cc-trends.dev · 매주 월요일 갱신</text>
+</svg>
