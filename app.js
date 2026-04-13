@@ -15,7 +15,7 @@ const BADGE_MAP = [
   { match: "awesome", cls: "b-awesome" },
 ];
 
-const BLOB_COLORS = ["h-green", "h-yellow", "h-blue", "h-pink", "h-orange"];
+const BLOB_COLORS = ["h-cyan", "h-blue", "h-indigo", "h-violet", "h-pink", "h-emerald"];
 
 async function load() {
   try {
@@ -83,13 +83,13 @@ function blobFor(item, idx) {
   // Pick a content label + color
   let color, top, bottom;
   if (isNew) {
-    color = "h-green"; top = "NEW"; bottom = "신상";
+    color = "h-emerald"; top = "NEW"; bottom = "신상";
   } else if (rank === 1) {
-    color = "h-yellow"; top = "#01"; bottom = isRising ? "화제" : "대세";
+    color = "h-cyan"; top = "#01"; bottom = isRising ? "화제" : "대세";
   } else if (rank === 2 || rank === 3) {
-    color = "h-orange"; top = `#0${rank}`; bottom = isRising ? "급상승" : "필독";
+    color = "h-blue"; top = `#0${rank}`; bottom = isRising ? "급상승" : "필독";
   } else if (isKor) {
-    color = "h-blue"; top = "KR"; bottom = "한국어";
+    color = "h-indigo"; top = "KR"; bottom = "한국어";
   } else {
     color = BLOB_COLORS[idx % BLOB_COLORS.length];
     const cat = (item.category || "").toUpperCase();
