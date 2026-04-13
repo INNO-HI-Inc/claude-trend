@@ -1,12 +1,12 @@
 :root {
-  --bg: #f2f1ec;
+  --bg: #e8dec8;
   --card: #ffffff;
-  --card-hover: #f9f8f3;
+  --card-hover: #fbf7ec;
   --ink: #161616;
-  --ink-2: #3a3a38;
-  --muted: #76736b;
-  --soft: #b8b4a8;
-  --pill: #eceae2;
+  --ink-2: #3a3a36;
+  --muted: #716a5c;
+  --soft: #a8a08e;
+  --pill: #f0e9d6;
   --accent: #e85a3a;
 
   --hl-mint:   #d8edd0;
