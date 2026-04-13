@@ -15,7 +15,7 @@ const BADGE_MAP = [
   { match: "awesome", cls: "b-awesome" },
 ];
 
-const BLOB_COLORS = ["h-cyan", "h-blue", "h-indigo", "h-violet", "h-pink", "h-emerald"];
+const BLOB_COLORS = ["h-green", "h-yellow", "h-blue", "h-pink", "h-orange", "h-lavender"];
 
 async function load() {
   try {
@@ -35,7 +35,7 @@ function updateMeta() {
     const t = new Date(d.generated_at);
     upd.innerHTML = `<strong>${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}</strong> 업데이트`;
   } else {
-    upd.textContent = "데이터 없음";
+    upd.textContent = "데이터 준비 중";
   }
   const rising = d.rising || [];
   const classic = d.classic || [];
@@ -73,52 +73,53 @@ function escapeHTML(s) {
   }[c]));
 }
 
-/** Highlight blob content + color — derived from rank/badges to give visual variety */
-function blobFor(item, idx) {
+function highlightFor(item, idx) {
   const rank = item.rank || (idx + 1);
   const isRising = (item.badges || []).some(b => b.includes("Rising"));
   const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
   const isKor = (item.badges || []).some(b => b.includes("한국어"));
 
-  // Pick a content label + color
-  let color, top, bottom;
+  let color, label;
   if (isNew) {
-    color = "h-emerald"; top = "NEW"; bottom = "신상";
+    color = "h-green"; label = "신상";
+  } else if (isRising && rank <= 3) {
+    color = rank === 1 ? "h-yellow" : "h-orange"; label = "급상승";
   } else if (rank === 1) {
-    color = "h-cyan"; top = "#01"; bottom = isRising ? "화제" : "대세";
-  } else if (rank === 2 || rank === 3) {
-    color = "h-blue"; top = `#0${rank}`; bottom = isRising ? "급상승" : "필독";
+    color = "h-yellow"; label = "대세";
   } else if (isKor) {
-    color = "h-indigo"; top = "KR"; bottom = "한국어";
+    color = "h-blue"; label = "한국어";
+  } else if (isRising) {
+    color = "h-pink"; label = "화제";
   } else {
-    color = BLOB_COLORS[idx % BLOB_COLORS.length];
-    const cat = (item.category || "").toUpperCase();
-    top = cat || "#" + String(rank).padStart(2, "0");
-    bottom = isRising ? "급상승" : "대세";
+    color = BLOB_COLORS[idx % BLOB_COLORS.length]; label = "추천";
   }
-  return { color, top, bottom };
+  const rankStr = "#" + String(rank).padStart(2, "0");
+  return { color, label, rankStr };
 }
 
 function cardHTML(item, idx) {
-  const badges = (item.badges || []).map(b =>
+  const badges = (item.badges || []).slice(0, 2).map(b =>
     `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
   ).join("");
   const feats = (item.key_features || []).slice(0, 3).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
-  const blob = blobFor(item, idx);
+  const hl = highlightFor(item, idx);
+  const safeId = escapeHTML(item.id || "");
   return `
-    <article class="card">
-      <div class="highlight ${blob.color}">
-        <strong>${escapeHTML(blob.top)}</strong>
-        ${escapeHTML(blob.bottom)}
+    <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
+      <div class="highlight ${hl.color}">
+        <span class="h-dot"></span>
+        <span class="h-rank">${hl.rankStr}</span>
+        <span class="h-sep">·</span>
+        <span>${hl.label}</span>
       </div>
       <div class="card-head">
         <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
         <div class="head-meta">
           <div class="category-label">${escapeHTML(item.category || "")}</div>
-          <div class="repo-id">${escapeHTML(item.id || "")}</div>
+          <div class="repo-id">${safeId}</div>
         </div>
       </div>
       <h3>${escapeHTML(item.title_ko || item.id)}</h3>
@@ -129,12 +130,69 @@ function cardHTML(item, idx) {
           <div class="stars-line">★ <strong>${formatStars(item.stars)}</strong> stars</div>
           ${badges ? `<div class="badges">${badges}</div>` : ""}
         </div>
-        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
+        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           GITHUB <span class="arrow">→</span>
         </a>
       </div>
+      <div class="card-hint">클릭해서 자세히 보기</div>
     </article>
   `;
+}
+
+function modalHTML(item) {
+  const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
+  const badges = (item.badges || []).map(b =>
+    `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
+  ).join("");
+  const tags = (item.tags || []).map(t =>
+    `<span class="m-tag">${escapeHTML(t)}</span>`
+  ).join("");
+  const feats = (item.key_features || []).map(f =>
+    `<li>${escapeHTML(f)}</li>`
+  ).join("");
+  return `
+    <div class="m-head">
+      <img class="m-avatar" src="${escapeHTML(avatar)}" alt="" onerror="this.style.visibility='hidden'"/>
+      <div class="m-meta">
+        <div class="m-category">${escapeHTML(item.category || "")}  ·  ★ ${formatStars(item.stars)}</div>
+        <div class="m-repo">${escapeHTML(item.id || "")}</div>
+      </div>
+    </div>
+    <h2>${escapeHTML(item.title_ko || item.id)}</h2>
+    ${item.catchphrase ? `<p class="m-catch">${escapeHTML(item.catchphrase)}</p>` : ""}
+    ${badges ? `<div class="m-section"><div class="m-badges">${badges}</div></div>` : ""}
+    ${item.summary_ko ? `<div class="m-section"><div class="m-label">요약</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
+    ${feats ? `<div class="m-section"><div class="m-label">핵심 기능</div><ul class="m-features">${feats}</ul></div>` : ""}
+    ${item.use_case ? `<div class="m-section"><div class="m-label">이럴 때 쓰세요</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
+    ${item.install_hint ? `<div class="m-section"><div class="m-label">설치</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
+    ${tags ? `<div class="m-section"><div class="m-label">태그</div><div class="m-tags">${tags}</div></div>` : ""}
+    <a class="m-cta" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
+      GITHUB에서 열기 <span class="m-cta-arrow">→</span>
+    </a>
+  `;
+}
+
+function findItem(id) {
+  const d = STATE.data || {};
+  return (d.rising || []).find(x => x.id === id) || (d.classic || []).find(x => x.id === id);
+}
+
+function openModal(id) {
+  const item = findItem(id);
+  if (!item) return;
+  const modal = document.getElementById("modal");
+  document.getElementById("modal-body").innerHTML = modalHTML(item);
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  modal.querySelector(".modal-panel").scrollTop = 0;
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
 }
 
 function render() {
@@ -167,6 +225,24 @@ document.querySelectorAll("#category-filter .chip").forEach(btn => {
     STATE.category = btn.dataset.cat;
     render();
   });
+});
+
+document.getElementById("grid").addEventListener("click", e => {
+  if (e.target.closest(".repo-link")) return;
+  const card = e.target.closest(".card");
+  if (card) openModal(card.dataset.id);
+});
+document.getElementById("grid").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card")) {
+    e.preventDefault();
+    openModal(e.target.dataset.id);
+  }
+});
+document.getElementById("modal").addEventListener("click", e => {
+  if (e.target.dataset.close !== undefined) closeModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
 });
 
 load();

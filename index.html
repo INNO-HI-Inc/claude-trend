@@ -3,8 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CC Trends — Claude Code 에이전트 / 스킬 / 하네스</title>
-<meta name="description" content="Claude Code 생태계의 최근 화제와 이미 유명한 것들을 한눈에." />
+<title>CC Trends — Claude Code 에이전트 · 스킬 · 하네스 트렌드</title>
+<meta name="description" content="GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 생태계 트렌드. 지금 뜨는 것들과 이미 거대해진 것들을 한눈에." />
+<meta name="theme-color" content="#f4f3ee" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="CC Trends — Claude Code 트렌드" />
+<meta property="og:description" content="지금 뜨는 Claude Code 에이전트 · 스킬 · 하네스 · MCP를 한 페이지에서. 매주 자동 갱신되는 라이브 피드." />
+<meta property="og:url" content="https://inno-hi-inc.github.io/claude-trend/" />
+<meta property="og:image" content="https://inno-hi-inc.github.io/claude-trend/og.png" />
+<meta property="og:locale" content="ko_KR" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="CC Trends — Claude Code 트렌드" />
+<meta name="twitter:description" content="Claude Code 에이전트 · 스킬 · 하네스 주간 트렌드 라이브 피드" />
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%23f4f3ee"/><circle cx="16" cy="16" r="8" fill="%23c8f0b8"/><text x="16" y="21" font-family="system-ui" font-size="14" font-weight="700" text-anchor="middle" fill="%230a0a0a">✦</text></svg>' />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -12,41 +30,39 @@
 </head>
 <body>
 <header class="hero">
-  <div class="hero-inner">
-    <div class="logo-row">
-      <span class="dot"></span>
-      <span class="brand">CC Trends</span>
-    </div>
-    <h1>지금 <em>뜨는</em> 것들,<br/>이미 <em>거대해진</em> 것들.</h1>
-    <p class="subtitle">GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 에이전트 · 스킬 · 하네스 · MCP 트렌드. 라이브 피드.</p>
-    <div class="meta-row">
-      <span id="updated-at" class="meta-chip">—</span>
-      <span class="meta-chip">총 <strong id="total-count">0</strong>개 프로젝트</span>
-      <span class="meta-chip live">라이브 피드</span>
-    </div>
+  <div class="logo-row">
+    <span class="dot"></span>
+    <span class="brand">CC Trends</span>
+  </div>
+  <h1>지금 <em>뜨는</em> 것들,<br/>이미 거대해진 것들.</h1>
+  <p class="subtitle">GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 에이전트 · 스킬 · 하네스 · MCP 트렌드 피드.</p>
+  <div class="meta-row">
+    <span id="updated-at" class="meta-chip">—</span>
+    <span class="meta-chip">총 <strong id="total-count">0</strong>개 프로젝트</span>
+    <span class="meta-chip live">매주 자동 갱신</span>
   </div>
 </header>
 
 <nav class="controls">
   <div class="controls-inner">
     <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="rising" role="tab">
+      <button class="tab active" data-tab="rising" role="tab" aria-selected="true">
         <span class="tab-icon">🔥</span>
         <span class="tab-label">최근 화제</span>
         <span class="tab-count" id="rising-count">0</span>
       </button>
-      <button class="tab" data-tab="classic" role="tab">
+      <button class="tab" data-tab="classic" role="tab" aria-selected="false">
         <span class="tab-icon">⭐</span>
         <span class="tab-label">이미 유명한 것들</span>
         <span class="tab-count" id="classic-count">0</span>
       </button>
     </div>
     <div class="search-wrap">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <input type="search" id="search" placeholder="검색: 프로젝트, 태그, 저장소" />
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="search" placeholder="검색: 프로젝트, 저장소, 태그" aria-label="검색" />
     </div>
   </div>
-  <div class="filter-row" id="category-filter">
+  <div class="filter-row" id="category-filter" role="tablist" aria-label="카테고리 필터">
     <button data-cat="all" class="chip active">전체</button>
     <button data-cat="agent" class="chip">agent</button>
     <button data-cat="skill" class="chip">skill</button>
@@ -61,8 +77,16 @@
   <div class="grid" id="grid"></div>
 </main>
 
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" data-close aria-label="닫기">✕</button>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
 <footer>
-  <p>CC Trends · 자동 갱신 파이프라인 · <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub</a></p>
+  <p>CC Trends · 매주 자동 수집·큐레이션 · <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub</a></p>
 </footer>
 
 <script src="app.js"></script>
