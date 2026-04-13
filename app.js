@@ -137,7 +137,6 @@ function cardHTML(item, idx) {
   ).join("");
   return `
     <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="card-rank">RANK #${rankStr}</div>
       <div class="sticker ${st.color}">
         <strong>${escapeHTML(st.top)}</strong>
         ${escapeHTML(st.bottom)}
