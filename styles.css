@@ -235,11 +235,11 @@ main {
   padding: 24px 22px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   position: relative;
   cursor: pointer;
   transition: background .18s, border-color .18s, transform .18s;
-  height: 360px;
+  min-height: 420px;
 }
 .card:hover { border-color: var(--border-hover); }
 .card:hover {
