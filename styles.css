@@ -93,7 +93,7 @@ body {
   transition: all .15s;
   letter-spacing: -0.005em;
 }
-.top-link:hover {
+.top-link:hover, .ctrl-link:hover {
   border-color: var(--accent);
   color: var(--ink);
 }
