@@ -92,10 +92,34 @@ body {
   cursor: pointer;
   transition: all .15s;
   letter-spacing: -0.005em;
+  white-space: nowrap;
+  line-height: 1;
 }
-.top-link:hover, .ctrl-link:hover {
-  border-color: var(--accent);
+.top-link:hover {
+  border-color: var(--ink);
   color: var(--ink);
+}
+.ctrl-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  background: var(--pill);
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  line-height: 1;
+}
+.ctrl-link:hover {
+  background: var(--ink);
+  color: var(--card);
 }
 .brand-chip {
   display: inline-flex;
