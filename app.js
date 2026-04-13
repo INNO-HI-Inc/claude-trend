@@ -15,6 +15,8 @@ const BADGE_MAP = [
   { match: "awesome", cls: "b-awesome" },
 ];
 
+const BLOB_COLORS = ["h-green", "h-yellow", "h-blue", "h-pink", "h-orange"];
+
 async function load() {
   try {
     const res = await fetch("public/data/latest.json", { cache: "no-store" });
@@ -31,9 +33,9 @@ function updateMeta() {
   const upd = document.getElementById("updated-at");
   if (d.generated_at) {
     const t = new Date(d.generated_at);
-    upd.textContent = `📅 ${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")} 업데이트`;
+    upd.innerHTML = `<strong>${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}</strong> 업데이트`;
   } else {
-    upd.textContent = "📅 데이터 없음";
+    upd.textContent = "데이터 없음";
   }
   const rising = d.rising || [];
   const classic = d.classic || [];
@@ -71,6 +73,32 @@ function escapeHTML(s) {
   }[c]));
 }
 
+/** Highlight blob content + color — derived from rank/badges to give visual variety */
+function blobFor(item, idx) {
+  const rank = item.rank || (idx + 1);
+  const isRising = (item.badges || []).some(b => b.includes("Rising"));
+  const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
+  const isKor = (item.badges || []).some(b => b.includes("한국어"));
+
+  // Pick a content label + color
+  let color, top, bottom;
+  if (isNew) {
+    color = "h-green"; top = "NEW"; bottom = "신상";
+  } else if (rank === 1) {
+    color = "h-yellow"; top = "#01"; bottom = isRising ? "화제" : "대세";
+  } else if (rank === 2 || rank === 3) {
+    color = "h-orange"; top = `#0${rank}`; bottom = isRising ? "급상승" : "필독";
+  } else if (isKor) {
+    color = "h-blue"; top = "KR"; bottom = "한국어";
+  } else {
+    color = BLOB_COLORS[idx % BLOB_COLORS.length];
+    const cat = (item.category || "").toUpperCase();
+    top = cat || "#" + String(rank).padStart(2, "0");
+    bottom = isRising ? "급상승" : "대세";
+  }
+  return { color, top, bottom };
+}
+
 function cardHTML(item, idx) {
   const badges = (item.badges || []).map(b =>
     `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
@@ -78,34 +106,32 @@ function cardHTML(item, idx) {
   const feats = (item.key_features || []).slice(0, 3).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
-  const tags = (item.tags || []).slice(0, 4).map(t =>
-    `<span class="tag">${escapeHTML(t)}</span>`
-  ).join("");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
-  const rankStr = String(item.rank || (idx + 1)).padStart(2, "0");
+  const blob = blobFor(item, idx);
   return `
     <article class="card">
-      <div class="card-rank">RANK<strong>${rankStr}</strong></div>
+      <div class="highlight ${blob.color}">
+        <strong>${escapeHTML(blob.top)}</strong>
+        ${escapeHTML(blob.bottom)}
+      </div>
       <div class="card-head">
         <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
         <div class="head-meta">
+          <div class="category-label">${escapeHTML(item.category || "")}</div>
           <div class="repo-id">${escapeHTML(item.id || "")}</div>
-          <div class="stars-row">
-            <span class="stars">★ ${formatStars(item.stars)}</span>
-            <span class="category-label">${escapeHTML(item.category || "")}</span>
-          </div>
         </div>
       </div>
-      ${badges ? `<div class="badges">${badges}</div>` : ""}
       <h3>${escapeHTML(item.title_ko || item.id)}</h3>
       ${item.catchphrase ? `<p class="catch">${escapeHTML(item.catchphrase)}</p>` : ""}
-      ${item.summary_ko ? `<p class="summary">${escapeHTML(item.summary_ko)}</p>` : ""}
-      ${feats ? `<div class="features-wrap"><div class="label">핵심 기능</div><ul class="features">${feats}</ul></div>` : ""}
-      ${item.use_case ? `<div class="use-case">${escapeHTML(item.use_case)}</div>` : ""}
-      ${item.install_hint ? `<div class="install">${escapeHTML(item.install_hint)}</div>` : ""}
+      ${feats ? `<ul class="features">${feats}</ul>` : ""}
       <div class="card-foot">
-        <div class="tags">${tags}</div>
-        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">GitHub →</a>
+        <div class="meta-left">
+          <div class="stars-line">★ <strong>${formatStars(item.stars)}</strong> stars</div>
+          ${badges ? `<div class="badges">${badges}</div>` : ""}
+        </div>
+        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
+          GITHUB <span class="arrow">→</span>
+        </a>
       </div>
     </article>
   `;
