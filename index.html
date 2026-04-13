@@ -36,47 +36,48 @@
 </div>
 
 <section class="hero">
+  <div class="hero-label">Weekly ISSUE · cc-trends / v<span id="issue-no">01</span></div>
   <div class="prompt-line">
     <span class="prompt">~/cc-trends $</span>
-    <span class="cmd">weekly <span class="flag">--scope</span>=<span class="str">"claude-code"</span> <span class="flag">--sources</span>=<span class="str">"github,hn,reddit,devto,geeknews,velog"</span></span>
+    <span class="cmd">weekly <span class="flag">--scope</span>=<span class="str">"claude-code"</span> <span class="flag">--sources</span>=<span class="str">"6"</span></span>
     <span class="cursor"></span>
   </div>
   <div class="output">
-    <div><span class="ok">✓</span> scraped <span class="num" id="out-total">0</span> projects across 6 sources</div>
+    <div><span class="ok">✓</span> scraped <span class="num" id="out-total">0</span> projects from github, hn, reddit, devto, geeknews, velog</div>
     <div><span class="ok">✓</span> classified: <span class="num" id="out-rising">0</span> rising · <span class="num" id="out-classic">0</span> classic</div>
-    <div><span class="key">report</span> → <span class="link">index.json</span> <span class="key">(updated weekly)</span></div>
+    <div><span class="key">→ report ready.</span> <span class="link">index.json</span> <span class="key">· next run in 7d</span></div>
   </div>
 
-  <h1>Claude Code 생태계,<br/><span class="tok">agents</span> · <span class="tok">skills</span> · <span class="tok">harnesses</span> · <span class="tok">mcp</span> <span class="arrow-down">↓</span></h1>
-  <p class="lede">매주 GitHub과 개발자 커뮤니티(HN · Reddit · dev.to · GeekNews · velog)를 스캔해 <strong style="color:var(--green)">rising</strong>과 <strong style="color:var(--yellow)">classic</strong>으로 분류한 인덱스.</p>
+  <h1>이번 주 Claude Code <span class="serif-accent">생태계에서</span><br/>뭐가 <span class="serif-accent">뜨고</span> <span class="muted-slash">/</span> 뭐가 <span class="serif-accent">자리잡았는지</span>.</h1>
+  <p class="lede">매주 <strong>GitHub</strong>과 개발자 커뮤니티(<em>HN · Reddit · dev.to · GeekNews · velog</em>)를 긁어서 <strong style="color:var(--amber)">rising</strong>과 <strong style="color:var(--terra)">classic</strong>으로 분류한 인덱스.</p>
 </section>
 
-<div class="stats">
+<div class="stats-outer"><div class="stats">
   <div class="stat">
-    <div class="stat-label">total</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--text-mute)"></span>total</div>
     <div class="stat-num" id="stat-total">0</div>
   </div>
   <div class="stat">
-    <div class="stat-label"><span style="color:var(--green)">●</span> rising</div>
-    <div class="stat-num g" id="stat-rising">0</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--amber)"></span>rising</div>
+    <div class="stat-num a" id="stat-rising">0</div>
   </div>
   <div class="stat">
-    <div class="stat-label"><span style="color:var(--yellow)">●</span> classic</div>
-    <div class="stat-num o" id="stat-classic">0</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--terra)"></span>classic</div>
+    <div class="stat-num r" id="stat-classic">0</div>
   </div>
   <div class="stat">
-    <div class="stat-label"><span style="color:var(--blue)">●</span> korean</div>
-    <div class="stat-num c" id="stat-kr">0</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--sky)"></span>korean</div>
+    <div class="stat-num t" id="stat-kr">0</div>
   </div>
   <div class="stat">
-    <div class="stat-label"><span style="color:var(--cyan)">●</span> new &lt;30d</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--teal)"></span>new &lt;30d</div>
     <div class="stat-num p" id="stat-new">0</div>
   </div>
   <div class="stat">
-    <div class="stat-label">sources</div>
-    <div class="stat-num pk">6</div>
+    <div class="stat-label"><span class="stat-dot" style="background:var(--amber-bright)"></span>sources</div>
+    <div class="stat-num o">6</div>
   </div>
-</div>
+</div></div>
 
 <nav class="controls">
   <div class="section-tabs" role="tablist">
