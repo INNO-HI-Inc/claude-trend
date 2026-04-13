@@ -26,49 +26,54 @@
 <div class="statusbar">
   <div class="statusbar-inner">
     <span class="seg live">LIVE</span>
-    <span class="seg"><span class="key">branch</span><span class="arrow">→</span><span class="val">main</span></span>
-    <span class="seg"><span class="key">index</span><span class="arrow">→</span><span class="val">v<span id="issue-no">01</span></span></span>
-    <span class="seg"><span class="key">updated</span><span class="arrow">→</span><span id="topbar-updated">—</span></span>
+    <span class="seg"><span class="key">issue</span><span class="arrow">·</span><span class="val">n°<span id="issue-no">01</span></span></span>
+    <span class="seg"><span class="key">last run</span><span class="arrow">·</span><span id="topbar-updated">—</span></span>
     <span class="spacer"></span>
     <span class="seg"><a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">github ↗</a></span>
   </div>
 </div>
 
 <header class="hero">
-  <div class="hero-label">Weekly · Issue v<span id="issue-no-2">01</span></div>
+  <div class="hero-label">Issue n°<span id="issue-no-2">01</span> — weekly</div>
   <h1>
-    지금 <em class="hl-mint">뜨는</em> 것들,<br/>
-    이미 <em class="hl-lemon">거대해진</em> 것들.
+    이번 주 Claude Code에서<br/>
+    뭐가 <em class="hl-mint">뜨고</em>,<br/>
+    뭐가 이미 <em class="hl-lemon">자리잡았나</em>.
   </h1>
   <p class="subtitle">
-    매주 <strong>GitHub</strong>과 개발자 커뮤니티(<em>HN · Reddit · dev.to · GeekNews · velog</em>)에서 <span class="mono">--scope=claude-code</span> 긁어서 <strong>rising</strong>과 <strong>classic</strong>으로 분류한 인덱스.
+    GitHub과 개발자 커뮤니티(<em>HN · Reddit · dev.to · GeekNews · velog</em>)에서 에이전트 · 스킬 · 하네스 · MCP를 긁어 주관 섞어 뽑은 주간 인덱스.
   </p>
-  <div class="prompt-box">
-    <span class="prompt">~/cc-trends $</span> weekly <span class="flag">--sources</span>=<span class="str">"6"</span> <span class="flag">--classify</span>
-    <span class="output">→ <span class="num" id="out-total">0</span> projects scanned · <span class="num" id="out-rising">0</span> rising · <span class="num" id="out-classic">0</span> classic ready.<span class="cursor"></span></span>
+  <div class="hero-stats" aria-hidden="true">
+    <span><strong id="out-rising">0</strong> rising</span>
+    <span class="dot-sep">·</span>
+    <span><strong id="out-classic">0</strong> classic</span>
+    <span class="dot-sep">·</span>
+    <span>from <strong>6</strong> sources</span>
+    <span class="dot-sep">·</span>
+    <span><strong id="out-total">0</strong> total</span>
   </div>
 </header>
 
 <section class="stats" aria-label="이번 주 통계">
   <div class="stat">
     <div class="stat-num" id="stat-rising">0</div>
-    <div class="stat-label">🔥 Rising</div>
+    <div class="stat-label">Rising</div>
   </div>
   <div class="stat">
     <div class="stat-num" id="stat-classic">0</div>
-    <div class="stat-label">⭐ Classic</div>
+    <div class="stat-label">Classic</div>
   </div>
   <div class="stat">
     <div class="stat-num" id="stat-kr">0</div>
-    <div class="stat-label">🇰🇷 Korean</div>
+    <div class="stat-label">한국어 대응</div>
   </div>
   <div class="stat">
     <div class="stat-num" id="stat-new">0</div>
-    <div class="stat-label">🆕 New &lt;30d</div>
+    <div class="stat-label">30일내 신상</div>
   </div>
   <div class="stat">
     <div class="stat-num" id="stat-total">0</div>
-    <div class="stat-label">Σ Total</div>
+    <div class="stat-label">총 수록</div>
   </div>
 </section>
 
@@ -76,10 +81,10 @@
   <div class="controls-inner">
     <div class="tabs" role="tablist">
       <button class="tab active" data-tab="rising" role="tab" aria-selected="true">
-        🔥 rising <span class="tab-count" id="rising-count">0</span>
+        rising <span class="tab-count" id="rising-count">0</span>
       </button>
       <button class="tab" data-tab="classic" role="tab" aria-selected="false">
-        ⭐ classic <span class="tab-count" id="classic-count">0</span>
+        classic <span class="tab-count" id="classic-count">0</span>
       </button>
     </div>
     <div class="search-wrap">
@@ -118,13 +123,13 @@
 
 <footer>
   <div class="foot-left">
-    <span class="foot-brand">cc-trends <span class="accent">✦</span></span>
-    <span>made with claude code</span>
+    <span class="foot-brand">cc-trends</span>
+    <span>주간 수집 · 수동 큐레이션</span>
     <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">source ↗</a>
   </div>
   <div class="foot-shortcuts">
-    <span><span class="kbd">/</span> search</span>
-    <span><span class="kbd">esc</span> close</span>
+    <span><span class="kbd">/</span> 검색</span>
+    <span><span class="kbd">esc</span> 닫기</span>
   </div>
 </footer>
 

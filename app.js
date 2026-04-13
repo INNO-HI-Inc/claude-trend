@@ -154,7 +154,7 @@ function rowHTML(item, idx) {
           GITHUB <span class="arrow">→</span>
         </a>
       </div>
-      <div class="card-hint">👆 클릭해서 자세히</div>
+      <div class="card-hint">클릭해서 자세히</div>
     </article>
   `;
 }
@@ -228,7 +228,7 @@ function render() {
   const list = (d[STATE.tab] || []).filter(matches);
   const el = document.getElementById("grid");
   if (list.length === 0) {
-    el.innerHTML = `<div class="empty">no results — try a different query</div>`;
+    el.innerHTML = `<div class="empty">검색 결과 없음 — 다른 키워드로 시도</div>`;
   } else {
     el.innerHTML = list.map((it, i) => rowHTML(it, i)).join("");
   }

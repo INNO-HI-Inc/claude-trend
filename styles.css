@@ -116,18 +116,19 @@ body::before {
   gap: 8px;
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
-  color: var(--ink);
-  background: var(--lemon);
-  border: 1.5px solid var(--ink);
-  padding: 5px 12px;
-  border-radius: 100px;
-  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 36px;
-  font-weight: 700;
-  transform: rotate(-1deg);
+  margin-bottom: 28px;
+  font-weight: 600;
 }
-.hero-label::before { content: "✦"; }
+.hero-label::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: var(--ink);
+  display: inline-block;
+}
 
 .hero h1 {
   font-size: clamp(42px, 6.8vw, 88px);
@@ -187,35 +188,28 @@ body::before {
 }
 .subtitle .mono { color: var(--muted); font-size: 0.92em; }
 
-/* ============ PROMPT TEASER ============ */
-.prompt-box {
-  margin-top: 8px;
-  max-width: 760px;
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: 10px;
-  padding: 14px 18px;
+/* ============ HERO STATS LINE ============ */
+.hero-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
   font-family: "JetBrains Mono", monospace;
   font-size: 13px;
-  line-height: 1.7;
-  overflow-x: auto;
-  box-shadow: var(--shadow-brut);
-  border: 1.5px solid var(--ink);
+  color: var(--muted);
+  padding-top: 6px;
+  border-top: 1px dashed var(--rule);
+  margin-top: 4px;
+  padding-top: 18px;
 }
-.prompt-box .prompt { color: var(--coral); font-weight: 700; }
-.prompt-box .flag { color: var(--lemon); }
-.prompt-box .str { color: var(--mint); }
-.prompt-box .output { display: block; color: var(--soft); font-size: 12px; margin-top: 4px; }
-.prompt-box .output .num { color: var(--lemon); font-weight: 700; }
-.prompt-box .cursor {
-  display: inline-block;
-  width: 8px; height: 0.9em;
-  background: var(--coral);
-  vertical-align: text-bottom;
-  animation: caret 1s step-end infinite;
-  margin-left: 2px;
+.hero-stats strong {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  margin-right: 2px;
 }
-@keyframes caret { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+.hero-stats .dot-sep { color: var(--soft); }
 
 /* ============ STATS ============ */
 .stats {
@@ -962,8 +956,13 @@ footer {
   color: var(--muted);
 }
 footer .foot-left { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-footer .foot-brand { color: var(--ink); font-weight: 700; display: inline-flex; gap: 6px; align-items: center; }
-footer .foot-brand .accent { color: var(--coral); }
+footer .foot-brand {
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+}
 footer a {
   color: var(--ink);
   text-decoration: none;
