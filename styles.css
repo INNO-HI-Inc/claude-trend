@@ -77,6 +77,28 @@ body {
   align-items: center;
   gap: 6px;
 }
+.service-brand {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 1.1;
+}
+.service-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.service-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.service-sub svg { flex-shrink: 0; }
+
 .top-link {
   display: inline-flex;
   align-items: center;
