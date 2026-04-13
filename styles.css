@@ -18,12 +18,13 @@ body {
   font-family: "A2-Gothic", "A2G", "A2 Gothic", "산돌 에이투지", "에이투지체", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
   background: var(--bg);
   color: var(--ink);
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   min-height: 100vh;
   font-size: 14px;
+  word-break: keep-all;
 }
 
 ::selection { background: var(--accent); color: var(--card); }
@@ -180,14 +181,14 @@ main {
 .card h3 {
   font-size: 19px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.4;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .catch {
   font-size: 13.5px;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.7;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -255,7 +256,7 @@ main {
 }
 .modal-close:hover { background: var(--ink); color: var(--card); }
 
-.modal-body { padding: 48px 56px 52px; }
+.modal-body { padding: 56px 64px 60px; }
 .m-rank {
   display: inline-flex;
   align-items: center;
@@ -306,22 +307,23 @@ main {
 }
 
 .modal-body h2 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: 16px;
+  letter-spacing: -0.028em;
+  line-height: 1.3;
+  margin-bottom: 18px;
   color: var(--ink);
-  max-width: 760px;
+  max-width: 720px;
 }
 .m-catch {
-  font-size: 17.5px;
+  font-size: 18px;
   color: var(--ink-2);
-  line-height: 1.6;
-  margin-bottom: 12px;
-  padding-left: 16px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  padding-left: 18px;
   border-left: 3px solid var(--accent);
-  max-width: 760px;
+  max-width: 720px;
+  font-weight: 500;
 }
 .m-badges {
   display: flex;
@@ -340,71 +342,79 @@ main {
 .m-badge.b-rising { background: var(--ink); color: var(--card); }
 .m-badge.b-classic { background: var(--accent); color: var(--card); }
 
-.m-section { margin-bottom: 32px; }
-.m-section:last-of-type { margin-bottom: 22px; }
+.m-section { margin-bottom: 40px; }
+.m-section:last-of-type { margin-bottom: 28px; }
 .m-section .m-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 14px;
-  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  letter-spacing: -0.005em;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 .m-section .m-label::before {
   content: "";
-  width: 18px; height: 1px;
-  background: var(--ink);
+  width: 20px; height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
 }
 .m-summary {
-  font-size: 16px;
+  font-size: 16.5px;
   color: var(--ink-2);
-  line-height: 1.85;
-  max-width: 760px;
+  line-height: 2;
+  max-width: 720px;
+  font-weight: 400;
+  word-break: keep-all;
 }
 .m-features {
   list-style: none; padding: 0;
   counter-reset: feat;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 10px;
 }
 .m-features li {
-  padding: 16px 18px 16px 52px;
+  padding: 20px 22px 20px 60px;
   background: var(--pill);
-  border-radius: 12px;
-  font-size: 15px;
-  color: var(--ink);
-  line-height: 1.65;
+  border-radius: 14px;
+  font-size: 15.5px;
+  color: var(--ink-2);
+  line-height: 1.75;
   position: relative;
+  font-weight: 400;
+  word-break: keep-all;
 }
 .m-features li::before {
   counter-increment: feat;
   content: counter(feat, decimal-leading-zero);
   position: absolute;
-  left: 18px; top: 16px;
-  font-size: 13px;
+  left: 22px; top: 20px;
+  font-size: 14px;
   color: var(--accent);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .m-usecase {
-  padding: 20px 22px;
+  padding: 22px 24px;
   background: var(--hl-lemon);
-  border-radius: 12px;
-  font-size: 15.5px;
+  border-radius: 14px;
+  font-size: 16px;
   color: var(--ink);
-  line-height: 1.7;
+  line-height: 1.85;
+  word-break: keep-all;
+  font-weight: 500;
 }
 .m-install {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13.5px;
-  padding: 16px 18px;
+  padding: 18px 20px;
   background: var(--ink);
   color: var(--card);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow-x: auto;
   white-space: nowrap;
   font-weight: 500;
+  line-height: 1.6;
 }
 .m-tags { display: flex; gap: 7px; flex-wrap: wrap; }
 .m-tag {
@@ -485,10 +495,13 @@ footer a:hover { color: var(--accent); border-color: var(--accent); }
   .tab { flex: 1; text-align: center; }
   .search-wrap { width: 100%; }
   .modal { padding: 20px 12px; }
-  .modal-body { padding: 32px 24px 32px; }
-  .modal-body h2 { font-size: 24px; }
-  .m-catch { font-size: 15px; padding-left: 12px; }
-  .m-summary { font-size: 14.5px; line-height: 1.75; }
-  .m-features li { font-size: 14px; padding: 14px 16px 14px 46px; }
+  .modal-body { padding: 36px 24px 36px; }
+  .modal-body h2 { font-size: 24px; line-height: 1.3; }
+  .m-catch { font-size: 15.5px; padding-left: 14px; line-height: 1.65; }
+  .m-summary { font-size: 15px; line-height: 1.9; }
+  .m-features li { font-size: 14.5px; padding: 16px 18px 16px 50px; line-height: 1.7; }
+  .m-features li::before { left: 18px; top: 16px; }
+  .m-usecase { font-size: 15px; padding: 18px 20px; line-height: 1.8; }
+  .m-section { margin-bottom: 32px; }
   footer { padding: 32px 20px 40px; }
 }
