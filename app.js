@@ -382,6 +382,6 @@ function openCriteria() {
   document.body.classList.add("modal-open");
   modal.scrollTop = 0;
 }
-document.getElementById("open-criteria").addEventListener("click", openCriteria);
+document.getElementById("open-criteria-top")?.addEventListener("click", openCriteria);
 
 load();
