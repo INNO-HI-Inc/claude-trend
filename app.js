@@ -266,55 +266,112 @@ document.addEventListener("keydown", e => {
 });
 
 const CRITERIA_HTML = `
-  <h2 style="font-size:28px;margin-bottom:8px">순위는 어떻게 매겨지나요?</h2>
-  <p class="m-catch">4가지 축의 가중 점수로 매주 다시 계산합니다.</p>
+  <div class="cr-eyebrow">CC-TRENDS · SCORING</div>
+  <h2 class="cr-title">순위는 어떻게 매겨지나요?</h2>
+  <p class="cr-lede">매주 4가지 축의 가중 점수로 다시 계산합니다.</p>
 
-  <div class="m-section">
-    <div class="m-label">최종 공식</div>
-    <div class="m-install">score = 0.4×velocity + 0.3×buzz + 0.2×quality + 0.1×recency</div>
-  </div>
-
-  <div class="m-section">
-    <div class="m-label">평가 4축</div>
-    <ul class="m-features">
-      <li><strong>Velocity (40%)</strong> — GitHub 7일 stars 증가 속도. 신상(30일 이내)이면 연령 보정 적용.</li>
-      <li><strong>Community Buzz (30%)</strong> — HN, Reddit, dev.to, GeekNews, velog 언급의 가중 합. 다중 플랫폼 동시 언급 +15, 프론트페이지 도달 +10.</li>
-      <li><strong>Quality (20%)</strong> — README 깊이, 라이선스, 최근 커밋, 테스트/예제, CI, 문서화.</li>
-      <li><strong>Recency (10%)</strong> — 최근 커밋이 얼마나 따끈한지 (60일 이상 방치면 0점).</li>
-    </ul>
-  </div>
-
-  <div class="m-section">
-    <div class="m-label">Rising vs Classic 분기</div>
-    <div class="m-usecase" style="background:var(--hl-mint);margin-bottom:10px">
-      <strong>🔥 Rising</strong> · 다음 중 하나면 충족<br/>
-      · 생성 30일 이내<br/>
-      · velocity ≥ 60 + 최근 14일 커뮤니티 언급 3건+<br/>
-      · HN/Reddit 프론트페이지 최근 7일 내 도달
+  <div class="cr-formula">
+    <div class="cr-formula-line">
+      <span class="cr-token">score</span>
+      <span class="cr-eq">=</span>
+      <span class="cr-weight w-velocity"><b>0.4</b>·velocity</span>
+      <span class="cr-plus">+</span>
+      <span class="cr-weight w-buzz"><b>0.3</b>·buzz</span>
+      <span class="cr-plus">+</span>
+      <span class="cr-weight w-quality"><b>0.2</b>·quality</span>
+      <span class="cr-plus">+</span>
+      <span class="cr-weight w-recency"><b>0.1</b>·recency</span>
     </div>
-    <div class="m-usecase" style="background:var(--hl-lemon)">
-      <strong>⭐ Classic</strong> · 모두 충족해야 함<br/>
-      · stars ≥ 500<br/>
-      · 생성 60일 경과<br/>
-      · 최근 30일 내 커밋 존재<br/>
-      <em style="font-size:13px;color:var(--muted)">둘 다 해당되면 Rising 우선 (신선도 가산)</em>
+    <div class="cr-bar">
+      <span class="cr-bar-seg w-velocity" style="flex:40"><span>40%</span></span>
+      <span class="cr-bar-seg w-buzz" style="flex:30"><span>30%</span></span>
+      <span class="cr-bar-seg w-quality" style="flex:20"><span>20%</span></span>
+      <span class="cr-bar-seg w-recency" style="flex:10"><span>10%</span></span>
     </div>
   </div>
 
-  <div class="m-section">
-    <div class="m-label">편향 보정</div>
-    <ul class="m-features">
-      <li>한국어 README·블로그 가산점 <strong>+10 buzz</strong> (영어권 규모 차이 보정)</li>
-      <li>Anthropic 공식·임직원 프로젝트는 'official' 태그만 부여, 점수는 동일</li>
-    </ul>
+  <div class="cr-section">
+    <div class="cr-section-label">평가 4축</div>
+    <div class="cr-axes">
+      <div class="cr-axis">
+        <div class="cr-axis-head">
+          <span class="cr-axis-dot w-velocity"></span>
+          <span class="cr-axis-name">Velocity</span>
+          <span class="cr-axis-pct">40%</span>
+        </div>
+        <p class="cr-axis-desc">GitHub 7일 stars 증가 속도. 신상(30일 이내)은 연령 보정 적용.</p>
+      </div>
+      <div class="cr-axis">
+        <div class="cr-axis-head">
+          <span class="cr-axis-dot w-buzz"></span>
+          <span class="cr-axis-name">Community Buzz</span>
+          <span class="cr-axis-pct">30%</span>
+        </div>
+        <p class="cr-axis-desc">HN · Reddit · dev.to · GeekNews · velog 언급의 가중 합. 다중 플랫폼 동시 언급 +15, 프론트 도달 +10.</p>
+      </div>
+      <div class="cr-axis">
+        <div class="cr-axis-head">
+          <span class="cr-axis-dot w-quality"></span>
+          <span class="cr-axis-name">Quality</span>
+          <span class="cr-axis-pct">20%</span>
+        </div>
+        <p class="cr-axis-desc">README 깊이, 라이선스, 최근 커밋, 테스트/예제, CI, 문서화 점수.</p>
+      </div>
+      <div class="cr-axis">
+        <div class="cr-axis-head">
+          <span class="cr-axis-dot w-recency"></span>
+          <span class="cr-axis-name">Recency</span>
+          <span class="cr-axis-pct">10%</span>
+        </div>
+        <p class="cr-axis-desc">최근 커밋이 얼마나 따끈한지. 60일 이상 방치면 0점.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="m-section">
-    <div class="m-label">선정 결과</div>
-    <p class="m-summary">각 섹션 상위 12개 선별, 동점은 updated_at 최신순. 채점 미달 후보는 pending으로 다음 주 재검토.</p>
+  <div class="cr-section">
+    <div class="cr-section-label">Rising vs Classic</div>
+    <div class="cr-versus">
+      <div class="cr-vs-card cr-rising">
+        <div class="cr-vs-head"><span class="cr-vs-icon">🔥</span><strong>Rising</strong> · 이번 주 뜨는</div>
+        <div class="cr-vs-rule">하나라도 충족하면 OK</div>
+        <ul>
+          <li>생성 30일 이내</li>
+          <li>velocity ≥ 60 + 최근 14일 커뮤니티 언급 3건+</li>
+          <li>HN/Reddit 프론트페이지 최근 7일 내 도달</li>
+        </ul>
+      </div>
+      <div class="cr-vs-card cr-classic">
+        <div class="cr-vs-head"><span class="cr-vs-icon">⭐</span><strong>Classic</strong> · 이미 유명한</div>
+        <div class="cr-vs-rule">전부 충족해야 OK</div>
+        <ul>
+          <li>stars ≥ 500</li>
+          <li>생성 60일 경과</li>
+          <li>최근 30일 내 커밋 존재</li>
+        </ul>
+      </div>
+    </div>
+    <p class="cr-note">둘 다 해당되면 <strong>Rising 우선</strong> (신선도 가산)</p>
   </div>
 
-  <a class="m-cta" href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">소스 코드 보기 →</a>
+  <div class="cr-section">
+    <div class="cr-section-label">편향 보정</div>
+    <div class="cr-bias">
+      <div class="cr-bias-row">
+        <span class="cr-bias-tag">+10</span>
+        <span>한국어 README·블로그 발견 시 buzz 가산 — 영어권 규모 차이 보정</span>
+      </div>
+      <div class="cr-bias-row">
+        <span class="cr-bias-tag">official</span>
+        <span>Anthropic 공식·임직원 프로젝트는 태그만 부여, 점수는 동일</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="cr-foot">각 섹션 상위 12개 선별 · 동점은 최근 업데이트순 · 채점 미달은 다음 주 재검토</p>
+
+  <a class="m-cta" href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">
+    소스 코드 보기 →
+  </a>
 `;
 
 function openCriteria() {
