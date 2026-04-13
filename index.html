@@ -3,43 +3,66 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CC Trends — Claude Code 에이전트/하네스/스킬 트렌드</title>
-<meta name="description" content="Claude Code 생태계의 최신 화제와 이미 유명한 에이전트/하네스/스킬을 한눈에." />
+<title>CC Trends — Claude Code 에이전트 / 스킬 / 하네스</title>
+<meta name="description" content="Claude Code 생태계의 최근 화제와 이미 유명한 것들을 한눈에." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<header class="site-header">
-  <h1>CC Trends</h1>
-  <p class="tagline">Claude Code 에이전트 · 하네스 · 스킬 트렌드</p>
-  <div class="meta"><span id="updated-at">—</span></div>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="logo-row">
+      <span class="dot"></span>
+      <span class="brand">CC Trends</span>
+    </div>
+    <h1>지금 <em>뜨는</em> 것들,<br/>이미 <em>거대해진</em> 것들.</h1>
+    <p class="subtitle">GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 에이전트 · 스킬 · 하네스 · MCP 트렌드. 라이브 피드.</p>
+    <div class="meta-row">
+      <span id="updated-at" class="meta-chip">—</span>
+      <span class="meta-chip">PROJECTS: <strong id="total-count">0</strong></span>
+      <span class="meta-chip">LIVE</span>
+    </div>
+  </div>
 </header>
 
-<nav class="filters">
-  <input type="search" id="search" placeholder="검색 (제목, 태그, 저장소)" />
-  <div class="filter-group" id="category-filter">
-    <button data-cat="all" class="active">전체</button>
-    <button data-cat="agent">agent</button>
-    <button data-cat="skill">skill</button>
-    <button data-cat="harness">harness</button>
-    <button data-cat="mcp">MCP</button>
-    <button data-cat="awesome-list">awesome</button>
+<nav class="controls">
+  <div class="controls-inner">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="rising" role="tab">
+        <span class="tab-icon">🔥</span>
+        <span class="tab-label">최근 화제</span>
+        <span class="tab-count" id="rising-count">0</span>
+      </button>
+      <button class="tab" data-tab="classic" role="tab">
+        <span class="tab-icon">⭐</span>
+        <span class="tab-label">이미 유명한 것들</span>
+        <span class="tab-count" id="classic-count">0</span>
+      </button>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="search" placeholder="검색: 프로젝트, 태그, 저장소" />
+    </div>
+  </div>
+  <div class="filter-row" id="category-filter">
+    <button data-cat="all" class="chip active">전체</button>
+    <button data-cat="agent" class="chip">agent</button>
+    <button data-cat="skill" class="chip">skill</button>
+    <button data-cat="harness" class="chip">harness</button>
+    <button data-cat="mcp" class="chip">MCP</button>
+    <button data-cat="awesome-list" class="chip">awesome</button>
+    <button data-cat="tool" class="chip">tool</button>
   </div>
 </nav>
 
 <main>
-  <section id="rising-section">
-    <h2>🔥 최근 화제</h2>
-    <div class="grid" id="rising-grid"></div>
-  </section>
-
-  <section id="classic-section">
-    <h2>⭐ 이미 유명한 것들</h2>
-    <div class="grid" id="classic-grid"></div>
-  </section>
+  <div class="grid" id="grid"></div>
 </main>
 
 <footer>
-  <p>자동 갱신 · <a href="https://github.com/topics/claude-code" target="_blank" rel="noopener">GitHub claude-code 토픽</a></p>
+  <p>CC Trends · 자동 갱신 파이프라인 · <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub</a></p>
 </footer>
 
 <script src="app.js"></script>
