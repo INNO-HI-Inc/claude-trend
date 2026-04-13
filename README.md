@@ -1,6 +1,6 @@
-# cc-trends
+# 클렌드 (Clend)
 
-**Claude Code 도구 주간 인덱스** — Claude Code 생태계의 에이전트 · 스킬 · 하네스 · MCP를 GitHub과 개발자 커뮤니티에서 매주 수집·분류·큐레이션합니다.
+**Claude Code 도구 주간 인덱스** — Claude Code 생태계의 에이전트 · 스킬 · 하네스 · MCP를 GitHub과 개발자 커뮤니티에서 매주 수집·분류·큐레이션합니다. 이름은 Claude + Trend.
 
 **Live:** https://inno-hi-inc.github.io/claude-trend/
 
