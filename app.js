@@ -6,13 +6,13 @@ const STATE = {
 };
 
 const BADGE_MAP = [
-  { match: "Rising", cls: "t-accent" },
-  { match: "Classic", cls: "t-highlight" },
-  { match: "한국어", cls: "t-ink" },
-  { match: "신상", cls: "t-accent" },
-  { match: "7일", cls: "t-accent" },
-  { match: "MCP", cls: "t-ink" },
-  { match: "awesome", cls: "t-highlight" },
+  { match: "Rising", cls: "t-rising" },
+  { match: "Classic", cls: "t-classic" },
+  { match: "한국어", cls: "t-kor" },
+  { match: "신상", cls: "t-new" },
+  { match: "7일", cls: "t-new" },
+  { match: "MCP", cls: "t-mcp" },
+  { match: "awesome", cls: "t-awesome" },
 ];
 
 async function load() {
@@ -38,15 +38,12 @@ function updateMeta() {
   if (d.generated_at) {
     const t = new Date(d.generated_at);
     const dateStr = `${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}`;
-    tb.textContent = `UPD ${dateStr}`;
-    // Calc issue number: weeks since 2026-01-05 (first Monday)
+    tb.textContent = dateStr;
     const epoch = new Date("2026-01-05T00:00:00Z").getTime();
     const weeks = Math.max(1, Math.floor((t.getTime() - epoch) / (7 * 24 * 3600 * 1000)) + 1);
-    const issue = String(weeks).padStart(2, "0");
-    document.getElementById("issue-no").textContent = issue;
-    document.getElementById("issue-no-foot").textContent = issue;
+    document.getElementById("issue-no").textContent = String(weeks).padStart(2, "0");
   } else {
-    tb.textContent = "UPD —";
+    tb.textContent = "—";
   }
 
   document.getElementById("rising-count").textContent = rising.length;
@@ -56,6 +53,9 @@ function updateMeta() {
   document.getElementById("stat-kr").textContent = kr;
   document.getElementById("stat-new").textContent = nw;
   document.getElementById("stat-total").textContent = all.length;
+  document.getElementById("out-total").textContent = all.length;
+  document.getElementById("out-rising").textContent = rising.length;
+  document.getElementById("out-classic").textContent = classic.length;
 }
 
 function matches(item) {
@@ -87,6 +87,14 @@ function escapeHTML(s) {
   }[c]));
 }
 
+function formatRepoId(id) {
+  if (!id) return "";
+  const [owner, ...rest] = id.split("/");
+  const repo = rest.join("/");
+  if (!repo) return escapeHTML(owner);
+  return `<span class="owner">${escapeHTML(owner)}</span><span class="slash">/</span>${escapeHTML(repo)}`;
+}
+
 function rowHTML(item, idx) {
   const rank = item.rank || (idx + 1);
   const rankStr = String(rank).padStart(2, "0");
@@ -94,24 +102,20 @@ function rowHTML(item, idx) {
     `<span class="tag ${badgeClass(b)}">${escapeHTML(b)}</span>`
   ).join("");
   const safeId = escapeHTML(item.id || "");
+  const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
   return `
     <article class="row" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="row-rank"><span class="hash">N°</span>${rankStr}</div>
-      <div class="row-main">
-        <div class="row-head">
-          <span class="category">${escapeHTML(item.category || "")}</span>
-          <span class="dot-sep">/</span>
-          <span class="repo">${safeId}</span>
-        </div>
-        <div class="row-title">${escapeHTML(item.title_ko || item.id)}</div>
-        ${item.catchphrase ? `<div class="row-catch">${escapeHTML(item.catchphrase)}</div>` : ""}
+      <div class="row-rank">${rankStr}</div>
+      <img class="row-avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
+      <div class="row-repo">
+        <div class="id">${formatRepoId(item.id)}</div>
+        <div class="title">${escapeHTML(item.title_ko || item.id)}</div>
       </div>
-      <div class="row-meta">
-        <div class="row-stars">${formatStars(item.stars)}<span class="unit">★</span></div>
-        ${badges ? `<div class="row-tags">${badges}</div>` : ""}
-      </div>
-      <div class="row-meta"></div>
-      <div class="row-arrow">→</div>
+      <div class="row-catch">${escapeHTML(item.catchphrase || item.summary_ko || "")}</div>
+      <div class="row-stars">${formatStars(item.stars)}<span class="unit">★</span></div>
+      <div class="row-category">${escapeHTML(item.category || "")}</div>
+      <div class="row-tags">${badges}</div>
+      <div class="row-open">→</div>
     </article>
   `;
 }
@@ -129,25 +133,25 @@ function modalHTML(item, idx) {
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   return `
-    <div class="m-rank">N° ${String(rank).padStart(2,"0")}</div>
+    <div class="m-rank"># ${STATE.tab}/${String(rank).padStart(2,"0")}</div>
     <div class="m-head">
       <img class="m-avatar" src="${escapeHTML(avatar)}" alt="" onerror="this.style.visibility='hidden'"/>
       <div class="m-meta">
         <div class="m-category">${escapeHTML(item.category || "")}</div>
-        <div class="m-repo">${escapeHTML(item.id || "")}</div>
+        <div class="m-repo">${formatRepoId(item.id)}</div>
       </div>
       <div class="m-stars">${formatStars(item.stars)}★</div>
     </div>
     <h2>${escapeHTML(item.title_ko || item.id)}</h2>
-    ${item.catchphrase ? `<p class="m-catch">${escapeHTML(item.catchphrase)}</p>` : ""}
-    ${badges ? `<div class="m-section"><div class="m-label">배지</div><div class="m-badges">${badges}</div></div>` : ""}
-    ${item.summary_ko ? `<div class="m-section"><div class="m-label">요약</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
-    ${feats ? `<div class="m-section"><div class="m-label">핵심 기능</div><ul class="m-features">${feats}</ul></div>` : ""}
-    ${item.use_case ? `<div class="m-section"><div class="m-label">이럴 때 쓰세요</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
-    ${item.install_hint ? `<div class="m-section"><div class="m-label">설치</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
-    ${tags ? `<div class="m-section"><div class="m-label">태그</div><div class="m-tags">${tags}</div></div>` : ""}
+    ${item.catchphrase ? `<div class="m-catch">${escapeHTML(item.catchphrase)}</div>` : ""}
+    ${badges ? `<div class="m-section"><div class="m-label">badges</div><div class="m-badges">${badges}</div></div>` : ""}
+    ${item.summary_ko ? `<div class="m-section"><div class="m-label">description</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
+    ${feats ? `<div class="m-section"><div class="m-label">features</div><ul class="m-features">${feats}</ul></div>` : ""}
+    ${item.use_case ? `<div class="m-section"><div class="m-label">when_to_use</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
+    ${item.install_hint ? `<div class="m-section"><div class="m-label">install</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
+    ${tags ? `<div class="m-section"><div class="m-label">tags</div><div class="m-tags">${tags}</div></div>` : ""}
     <a class="m-cta" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
-      GitHub에서 열기 <span class="m-cta-arrow">→</span>
+      open on github <span class="m-cta-arrow">↗</span>
     </a>
   `;
 }
@@ -166,6 +170,7 @@ function openModal(id) {
   if (!hit) return;
   const modal = document.getElementById("modal");
   document.getElementById("modal-body").innerHTML = modalHTML(hit.item, hit.idx);
+  document.getElementById("modal-path").textContent = `~/cc-trends/${STATE.tab}/${hit.item.id}`;
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -184,7 +189,7 @@ function render() {
   const list = (d[STATE.tab] || []).filter(matches);
   const el = document.getElementById("list");
   if (list.length === 0) {
-    el.innerHTML = `<div class="empty">— 해당하는 항목이 없습니다 —</div>`;
+    el.innerHTML = `<div class="empty">no results — try a different query</div>`;
   } else {
     el.innerHTML = list.map((it, i) => rowHTML(it, i)).join("");
   }
@@ -194,9 +199,9 @@ document.getElementById("search").addEventListener("input", e => {
   STATE.query = e.target.value;
   render();
 });
-document.querySelectorAll(".tab-link").forEach(btn => {
+document.querySelectorAll(".tab-btn").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-link").forEach(b => {
+    document.querySelectorAll(".tab-btn").forEach(b => {
       b.classList.remove("active");
       b.setAttribute("aria-selected", "false");
     });
@@ -230,6 +235,11 @@ document.getElementById("modal").addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
+  // "/" focuses search
+  if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+    e.preventDefault();
+    document.getElementById("search").focus();
+  }
 });
 
 load();

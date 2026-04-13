@@ -3,93 +3,100 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CC Trends — Claude Code 에이전트 · 스킬 · 하네스 트렌드</title>
-<meta name="description" content="GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 생태계 트렌드. 지금 뜨는 것들과 이미 거대해진 것들을 한눈에." />
-<meta name="theme-color" content="#f7f4ec" />
+<title>cc-trends — Claude Code ecosystem index</title>
+<meta name="description" content="Weekly-updated index of Claude Code agents, skills, harnesses, and MCP servers. Scraped from GitHub, HackerNews, Reddit, dev.to, GeekNews, velog." />
+<meta name="theme-color" content="#0a0a0b" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="CC Trends — Claude Code 트렌드" />
-<meta property="og:description" content="지금 뜨는 Claude Code 에이전트 · 스킬 · 하네스 · MCP를 한 페이지에서. 매주 자동 갱신." />
+<meta property="og:title" content="cc-trends — Claude Code ecosystem index" />
+<meta property="og:description" content="Weekly index of Claude Code agents · skills · harnesses · MCP. Aggregated from GitHub + dev communities." />
 <meta property="og:url" content="https://inno-hi-inc.github.io/claude-trend/" />
-<meta property="og:locale" content="ko_KR" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="CC Trends — Claude Code 트렌드" />
-<meta name="twitter:description" content="Claude Code 에이전트 · 스킬 · 하네스 주간 트렌드" />
+<meta name="twitter:title" content="cc-trends — Claude Code ecosystem index" />
+<meta name="twitter:description" content="Weekly index of Claude Code agents, skills, harnesses, MCP." />
 
-<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%23f7f4ec"/><circle cx="16" cy="16" r="6" fill="%23ff3d1f"/></svg>' />
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%230a0a0b"/><text x="6" y="22" font-family="monospace" font-size="18" font-weight="700" fill="%234ade80">&gt;</text><rect x="20" y="20" width="7" height="2" fill="%234ade80"/></svg>' />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Pretendard:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="logo-row">
-      <span class="dot"></span>
-      <span>CC Trends</span>
-    </div>
-    <div class="topbar-meta">
-      <span class="live-tag">LIVE</span>
-      <span id="topbar-updated">—</span>
-      <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
+<div class="statusbar">
+  <div class="statusbar-inner">
+    <span class="seg live">LIVE</span>
+    <span class="seg"><span class="key">branch</span><span class="arrow">→</span><span class="accent">main</span></span>
+    <span class="seg"><span class="key">index</span><span class="arrow">→</span><span>v<span id="issue-no">01</span></span></span>
+    <span class="seg"><span class="key">updated</span><span class="arrow">→</span><span id="topbar-updated">—</span></span>
+    <span class="spacer"></span>
+    <span class="seg"><a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">github.com/INNO-HI-Inc/claude-trend ↗</a></span>
   </div>
-</header>
+</div>
 
 <section class="hero">
-  <div class="hero-label">ISSUE N° <span id="issue-no">01</span> / WEEKLY / CLAUDE CODE</div>
-  <h1>
-    지금 <em>뜨는</em> 것들,<br/>
-    이미 <span class="slash">/</span> <em>거대해진</em> 것들.
-  </h1>
-  <p class="lede">
-    매주 <em>GitHub</em> · <em>HackerNews</em> · <em>Reddit</em> · <em>dev.to</em> · <em>GeekNews</em> · <em>velog</em>를 훑어 Claude Code 생태계의 에이전트 · 스킬 · 하네스 · MCP를 정리합니다.
-  </p>
+  <div class="prompt-line">
+    <span class="prompt">~/cc-trends $</span>
+    <span class="cmd">weekly <span class="flag">--scope</span>=<span class="str">"claude-code"</span> <span class="flag">--sources</span>=<span class="str">"github,hn,reddit,devto,geeknews,velog"</span></span>
+    <span class="cursor"></span>
+  </div>
+  <div class="output">
+    <div><span class="ok">✓</span> scraped <span class="num" id="out-total">0</span> projects across 6 sources</div>
+    <div><span class="ok">✓</span> classified: <span class="num" id="out-rising">0</span> rising · <span class="num" id="out-classic">0</span> classic</div>
+    <div><span class="key">report</span> → <span class="link">index.json</span> <span class="key">(updated weekly)</span></div>
+  </div>
+
+  <h1>Claude Code 생태계,<br/><span class="tok">agents</span> · <span class="tok">skills</span> · <span class="tok">harnesses</span> · <span class="tok">mcp</span> <span class="arrow-down">↓</span></h1>
+  <p class="lede">매주 GitHub과 개발자 커뮤니티(HN · Reddit · dev.to · GeekNews · velog)를 스캔해 <strong style="color:var(--green)">rising</strong>과 <strong style="color:var(--yellow)">classic</strong>으로 분류한 인덱스.</p>
 </section>
 
-<section class="stats-line" aria-label="이번 주 통계">
+<div class="stats">
   <div class="stat">
-    <div class="stat-num accent" id="stat-rising">0</div>
-    <div class="stat-label">🔥 급상승</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-classic">0</div>
-    <div class="stat-label">⭐ 필수</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-kr">0</div>
-    <div class="stat-label">🇰🇷 한국어</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-new">0</div>
-    <div class="stat-label">🆕 신상</div>
-  </div>
-  <div class="stat">
+    <div class="stat-label">total</div>
     <div class="stat-num" id="stat-total">0</div>
-    <div class="stat-label">총 프로젝트</div>
   </div>
-</section>
+  <div class="stat">
+    <div class="stat-label"><span style="color:var(--green)">●</span> rising</div>
+    <div class="stat-num g" id="stat-rising">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><span style="color:var(--yellow)">●</span> classic</div>
+    <div class="stat-num o" id="stat-classic">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><span style="color:var(--blue)">●</span> korean</div>
+    <div class="stat-num c" id="stat-kr">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><span style="color:var(--cyan)">●</span> new &lt;30d</div>
+    <div class="stat-num p" id="stat-new">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">sources</div>
+    <div class="stat-num pk">6</div>
+  </div>
+</div>
 
 <nav class="controls">
-  <div class="tabs-inline" role="tablist">
-    <button class="tab-link active" data-tab="rising" role="tab" aria-selected="true">
-      Now Rising<sup id="rising-count">0</sup>
+  <div class="section-tabs" role="tablist">
+    <button class="tab-btn active" data-tab="rising" role="tab" aria-selected="true">
+      rising <span class="count" id="rising-count">0</span>
     </button>
-    <button class="tab-link" data-tab="classic" role="tab" aria-selected="false">
-      The Classics<sup id="classic-count">0</sup>
+    <button class="tab-btn" data-tab="classic" role="tab" aria-selected="false">
+      classic <span class="count" id="classic-count">0</span>
     </button>
   </div>
   <div class="search-wrap">
-    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    <input type="search" id="search" placeholder="검색 / 프로젝트, 저장소, 태그" aria-label="검색" />
+    <span class="search-prompt">/</span>
+    <input type="search" id="search" placeholder="filter by name, tag, repo..." aria-label="search" />
+    <span class="kbd">/</span>
   </div>
 </nav>
 
 <div class="filter-row" id="category-filter">
-  <button data-cat="all" class="chip active">전체</button>
+  <span class="label">category:</span>
+  <button data-cat="all" class="chip active">all</button>
   <button data-cat="agent" class="chip">agent</button>
   <button data-cat="skill" class="chip">skill</button>
   <button data-cat="harness" class="chip">harness</button>
@@ -99,20 +106,41 @@
 </div>
 
 <main>
+  <div class="table-head" role="row">
+    <div>#</div>
+    <div class="h-avatar"></div>
+    <div>repository / title</div>
+    <div class="h-catch">catchphrase</div>
+    <div class="numeric">stars</div>
+    <div class="h-category">category</div>
+    <div class="h-tags">tags</div>
+    <div class="h-open"></div>
+  </div>
   <div class="list" id="list"></div>
 </main>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-panel" role="dialog" aria-modal="true">
-    <button class="modal-close" data-close aria-label="닫기">✕</button>
+    <div class="modal-titlebar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="path" id="modal-path">~/cc-trends/detail</div>
+      <button class="modal-close" data-close aria-label="close">✕</button>
+    </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
 <footer>
-  <div class="foot-brand">CC Trends <em>✦</em></div>
-  <div class="foot-meta">ISSUE N° <span id="issue-no-foot">01</span> · MADE WITH CLAUDE CODE · <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">SOURCE ↗</a></div>
+  <div class="foot-left">
+    <span class="foot-brand">cc-trends <span class="accent">●</span></span>
+    <span>made with claude code</span>
+    <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">source ↗</a>
+  </div>
+  <div class="foot-shortcuts">
+    <span class="sc"><span class="kbd">/</span> search</span>
+    <span class="sc"><span class="kbd">esc</span> close</span>
+  </div>
 </footer>
 
 <script src="app.js"></script>
