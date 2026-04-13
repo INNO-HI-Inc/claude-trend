@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CC Trends — Claude Code 에이전트 · 스킬 · 하네스 트렌드</title>
-<meta name="description" content="GitHub · HackerNews · Reddit · dev.to · GeekNews · velog에서 매주 수집하는 Claude Code 생태계 트렌드." />
-<meta name="theme-color" content="#f4f1e8" />
+<title>cc-trends — Claude Code 이번 주 트렌드</title>
+<meta name="description" content="이번 주 Claude Code 에이전트 · 스킬 · 하네스 · MCP를 모아 정리합니다. GitHub과 개발자 커뮤니티 기반, 매주 자동 갱신." />
+<meta name="theme-color" content="#fbfaf6" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="CC Trends — Claude Code 트렌드" />
-<meta property="og:description" content="지금 뜨는 Claude Code 에이전트 · 스킬 · 하네스 · MCP를 한 페이지에서. 매주 자동 갱신." />
+<meta property="og:title" content="cc-trends" />
+<meta property="og:description" content="이번 주 Claude Code 에이전트 · 스킬 · 하네스 · MCP 모음. 매주 갱신." />
 <meta property="og:url" content="https://inno-hi-inc.github.io/claude-trend/" />
 <meta property="og:locale" content="ko_KR" />
-<meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%23f4f1e8"/><circle cx="16" cy="16" r="10" fill="%23ff7657" stroke="%230e0e0e" stroke-width="1.5"/><text x="16" y="20" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle" fill="%230e0e0e">cc</text></svg>' />
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%23fbfaf6"/><circle cx="16" cy="16" r="10" fill="%23ff7657"/></svg>' />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,80 +22,19 @@
 </head>
 <body>
 
-<div class="statusbar">
-  <div class="statusbar-inner">
-    <span class="seg live">LIVE</span>
-    <span class="seg"><span class="val">이슈 n°<span id="issue-no">01</span></span></span>
-    <span class="seg">업데이트 <span id="topbar-updated">—</span></span>
-    <span class="spacer"></span>
-    <span class="seg"><a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub ↗</a></span>
-  </div>
-</div>
-
 <header class="hero">
-  <div class="hero-label">Issue n°<span id="issue-no-2">01</span> — weekly</div>
   <h1>이번 주 Claude Code에서<br/>뭐가 <em class="hl-mint">뜨고</em>, 뭐가 이미 <em class="hl-lemon">자리잡았나</em>.</h1>
-  <p class="subtitle">
-    GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 에이전트 · 스킬 · 하네스 · MCP를 훑어 정리한 주간 인덱스.
-  </p>
-  <div class="hero-stats" aria-hidden="true">
-    <span><strong id="out-rising">0</strong> rising</span>
-    <span class="dot-sep">·</span>
-    <span><strong id="out-classic">0</strong> classic</span>
-    <span class="dot-sep">·</span>
-    <span>from <strong>6</strong> sources</span>
-    <span class="dot-sep">·</span>
-    <span><strong id="out-total">0</strong> total</span>
-  </div>
+  <p class="subtitle">GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 에이전트 · 스킬 · 하네스 · MCP를 모아 정리합니다. <strong id="updated-inline">매주 갱신</strong>.</p>
 </header>
 
-<section class="stats" aria-label="이번 주 통계">
-  <div class="stat">
-    <div class="stat-num" id="stat-rising">0</div>
-    <div class="stat-label">Rising</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-classic">0</div>
-    <div class="stat-label">Classic</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-kr">0</div>
-    <div class="stat-label">한국어 대응</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-new">0</div>
-    <div class="stat-label">30일내 신상</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="stat-total">0</div>
-    <div class="stat-label">총 수록</div>
-  </div>
-</section>
-
 <nav class="controls">
-  <div class="controls-inner">
-    <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="rising" role="tab" aria-selected="true">
-        rising <span class="tab-count" id="rising-count">0</span>
-      </button>
-      <button class="tab" data-tab="classic" role="tab" aria-selected="false">
-        classic <span class="tab-count" id="classic-count">0</span>
-      </button>
-    </div>
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <input type="search" id="search" placeholder="프로젝트, 태그, 저장소 검색" aria-label="search" />
-    </div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="rising" role="tab" aria-selected="true">이번 주 뜨는</button>
+    <button class="tab" data-tab="classic" role="tab" aria-selected="false">이미 유명한</button>
   </div>
-  <div class="filter-row" id="category-filter">
-    <span class="label">카테고리</span>
-    <button data-cat="all" class="chip active">전체</button>
-    <button data-cat="agent" class="chip">agent</button>
-    <button data-cat="skill" class="chip">skill</button>
-    <button data-cat="harness" class="chip">harness</button>
-    <button data-cat="mcp" class="chip">mcp</button>
-    <button data-cat="awesome-list" class="chip">awesome</button>
-    <button data-cat="tool" class="chip">tool</button>
+  <div class="search-wrap">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <input type="search" id="search" placeholder="검색" aria-label="검색" />
   </div>
 </nav>
 
@@ -114,8 +52,7 @@
 
 <footer>
   <span class="foot-brand">cc-trends</span>
-  <span>주간 수집 · 수동 큐레이션</span>
-  <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">Source ↗</a>
+  <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub ↗</a>
 </footer>
 
 <script src="app.js"></script>
