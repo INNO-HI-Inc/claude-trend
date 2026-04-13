@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CC Trends — Claude Code 에이전트/하네스/스킬 트렌드</title>
+<meta name="description" content="Claude Code 생태계의 최신 화제와 이미 유명한 에이전트/하네스/스킬을 한눈에." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="site-header">
+  <h1>CC Trends</h1>
+  <p class="tagline">Claude Code 에이전트 · 하네스 · 스킬 트렌드</p>
+  <div class="meta"><span id="updated-at">—</span></div>
+</header>
+
+<nav class="filters">
+  <input type="search" id="search" placeholder="검색 (제목, 태그, 저장소)" />
+  <div class="filter-group" id="category-filter">
+    <button data-cat="all" class="active">전체</button>
+    <button data-cat="agent">agent</button>
+    <button data-cat="skill">skill</button>
+    <button data-cat="harness">harness</button>
+    <button data-cat="mcp">MCP</button>
+    <button data-cat="awesome-list">awesome</button>
+  </div>
+</nav>
+
+<main>
+  <section id="rising-section">
+    <h2>🔥 최근 화제</h2>
+    <div class="grid" id="rising-grid"></div>
+  </section>
+
+  <section id="classic-section">
+    <h2>⭐ 이미 유명한 것들</h2>
+    <div class="grid" id="classic-grid"></div>
+  </section>
+</main>
+
+<footer>
+  <p>자동 갱신 · <a href="https://github.com/topics/claude-code" target="_blank" rel="noopener">GitHub claude-code 토픽</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
