@@ -41,6 +41,30 @@ body {
   margin: 0 auto;
   padding: 88px 32px 48px;
 }
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  background: var(--card);
+  border: 1px solid var(--pill);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: all .15s;
+  letter-spacing: -0.005em;
+}
+.brand-chip:hover {
+  border-color: #cc785c;
+  color: var(--ink);
+}
+.brand-chip .brand-mark {
+  flex-shrink: 0;
+}
+
 .hero h1 {
   font-size: clamp(34px, 5.2vw, 60px);
   font-weight: 700;
