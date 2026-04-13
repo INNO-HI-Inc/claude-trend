@@ -15,7 +15,7 @@ const BADGE_MAP = [
   { match: "awesome", cls: "b-awesome" },
 ];
 
-const BLOB_COLORS = ["h-green", "h-yellow", "h-blue", "h-pink", "h-orange", "h-lavender"];
+const STICKER_FALLBACKS = ["s-mint", "s-lemon", "s-sky", "s-pink", "s-peach", "s-lilac"];
 
 async function load() {
   try {
@@ -25,23 +25,42 @@ async function load() {
     STATE.data = { generated_at: null, rising: [], classic: [] };
   }
   updateMeta();
+  updateTicker();
   render();
 }
 
 function updateMeta() {
   const d = STATE.data || {};
+  const rising = d.rising || [];
+  const classic = d.classic || [];
+  const all = [...rising, ...classic];
+  const kr = all.filter(i => (i.badges || []).some(b => b.includes("한국어"))).length;
+  const nw = all.filter(i => (i.badges || []).some(b => b.includes("신상") || b.includes("7일"))).length;
+
   const upd = document.getElementById("updated-at");
   if (d.generated_at) {
     const t = new Date(d.generated_at);
-    upd.innerHTML = `<strong>${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}</strong> 업데이트`;
+    upd.innerHTML = `${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")} 업데이트`;
   } else {
     upd.textContent = "데이터 준비 중";
   }
-  const rising = d.rising || [];
-  const classic = d.classic || [];
   document.getElementById("rising-count").textContent = rising.length;
   document.getElementById("classic-count").textContent = classic.length;
-  document.getElementById("total-count").textContent = rising.length + classic.length;
+  document.getElementById("total-count").textContent = all.length;
+  document.getElementById("stat-rising").textContent = rising.length;
+  document.getElementById("stat-classic").textContent = classic.length;
+  document.getElementById("stat-kr").textContent = kr;
+  document.getElementById("stat-new").textContent = nw;
+}
+
+function updateTicker() {
+  const d = STATE.data || {};
+  const items = (d.rising || []).slice(0, 10);
+  const labels = items.map(i => i.title_ko || i.id);
+  if (labels.length === 0) labels.push("CC Trends 로딩 중");
+  const joined = labels.concat(labels); // duplicate for seamless loop
+  const track = document.getElementById("ticker-track");
+  track.innerHTML = joined.map(l => `<span>${escapeHTML(l)}</span>`).join("");
 }
 
 function matches(item) {
@@ -73,47 +92,40 @@ function escapeHTML(s) {
   }[c]));
 }
 
-function highlightFor(item, idx) {
+function stickerFor(item, idx) {
   const rank = item.rank || (idx + 1);
   const isRising = (item.badges || []).some(b => b.includes("Rising"));
   const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
   const isKor = (item.badges || []).some(b => b.includes("한국어"));
 
-  let color, label;
-  if (isNew) {
-    color = "h-green"; label = "신상";
-  } else if (isRising && rank <= 3) {
-    color = rank === 1 ? "h-yellow" : "h-orange"; label = "급상승";
-  } else if (rank === 1) {
-    color = "h-yellow"; label = "대세";
-  } else if (isKor) {
-    color = "h-blue"; label = "한국어";
-  } else if (isRising) {
-    color = "h-pink"; label = "화제";
-  } else {
-    color = BLOB_COLORS[idx % BLOB_COLORS.length]; label = "추천";
-  }
-  const rankStr = "#" + String(rank).padStart(2, "0");
-  return { color, label, rankStr };
+  if (isNew) return { color: "s-lime", top: "NEW", bottom: "신상" };
+  if (isRising && rank === 1) return { color: "s-coral", top: "#01", bottom: "HOT" };
+  if (isRising && rank <= 3) return { color: "s-lemon", top: `#0${rank}`, bottom: "급상승" };
+  if (rank === 1) return { color: "s-lemon", top: "#01", bottom: "대세" };
+  if (isKor) return { color: "s-sky", top: "KR", bottom: "한국어" };
+  if (isRising) return { color: "s-pink", top: "HOT", bottom: "화제" };
+  return { color: STICKER_FALLBACKS[idx % STICKER_FALLBACKS.length], top: "#" + String(rank).padStart(2,"0"), bottom: "PICK" };
 }
 
 function cardHTML(item, idx) {
   const badges = (item.badges || []).slice(0, 2).map(b =>
     `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
   ).join("");
-  const feats = (item.key_features || []).slice(0, 3).map(f =>
+  const rank = item.rank || (idx + 1);
+  const isFeatured = idx === 0;
+  const maxFeats = isFeatured ? 4 : 3;
+  const feats = (item.key_features || []).slice(0, maxFeats).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
-  const hl = highlightFor(item, idx);
+  const st = stickerFor(item, idx);
   const safeId = escapeHTML(item.id || "");
   return `
     <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="highlight ${hl.color}">
-        <span class="h-dot"></span>
-        <span class="h-rank">${hl.rankStr}</span>
-        <span class="h-sep">·</span>
-        <span>${hl.label}</span>
+      <div class="card-num">RANK #${String(rank).padStart(2,"0")}</div>
+      <div class="sticker ${st.color}">
+        <strong>${escapeHTML(st.top)}</strong>
+        ${escapeHTML(st.bottom)}
       </div>
       <div class="card-head">
         <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
@@ -127,14 +139,14 @@ function cardHTML(item, idx) {
       ${feats ? `<ul class="features">${feats}</ul>` : ""}
       <div class="card-foot">
         <div class="meta-left">
-          <div class="stars-line">★ <strong>${formatStars(item.stars)}</strong> stars</div>
+          <div class="stars-line">★ ${formatStars(item.stars)}</div>
           ${badges ? `<div class="badges">${badges}</div>` : ""}
         </div>
         <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           GITHUB <span class="arrow">→</span>
         </a>
       </div>
-      <div class="card-hint">클릭해서 자세히 보기</div>
+      <div class="card-hint">👆 클릭해서 자세히 보기</div>
     </article>
   `;
 }
