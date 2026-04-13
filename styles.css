@@ -1,21 +1,29 @@
 :root {
-  --bg: #fbfaf6;
-  --card: #ffffff;
-  --card-hover: #f6f4ee;
-  --ink: #0e0e0e;
-  --ink-2: #2b2b2b;
-  --muted: #6b6860;
-  --soft: #b3afa4;
-  --pill: #f2efe5;
-  --accent: #e85a3a;
+  /* surfaces */
+  --bg:           #fbfaf6;
+  --card:         #ffffff;
+  --card-hover:   #f6f4ee;
+  --pill:         #f2efe5;
+  --border:       #e8e3d3;
+  --border-hover: #d6d0bd;
 
-  --hl-mint:   #d8edd0;
-  --hl-lemon:  #ffeca0;
-  --hl-peach:  #ffd8bd;
-  --hl-pink:   #ffd6e0;
-  --hl-sky:    #d4e5fa;
-  --hl-lilac:  #e0d4f5;
-  --hl-coral:  #ff9476;
+  /* text */
+  --ink:    #0e0e0e;
+  --ink-2:  #2b2b2b;
+  --muted:  #6b6860;
+  --soft:   #b3afa4;
+
+  /* brand */
+  --accent: #d97757;  /* Anthropic terracotta — matches Claude Code logo */
+
+  /* sticker pastels */
+  --hl-mint:  #d8edd0;
+  --hl-lemon: #ffeca0;
+  --hl-peach: #ffd8bd;
+  --hl-pink:  #ffd6e0;
+  --hl-sky:   #d4e5fa;
+  --hl-lilac: #e0d4f5;
+  --hl-coral: #ff9476;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,7 +81,7 @@ body {
   letter-spacing: -0.005em;
 }
 .brand-chip:hover {
-  border-color: #cc785c;
+  border-color: var(--accent);
   color: var(--ink);
 }
 .brand-chip .brand-mark {
@@ -222,7 +230,7 @@ main {
 /* ============ CARD ============ */
 .card {
   background: var(--card);
-  border: 1px solid #e8e3d3;
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px 22px 20px;
   display: flex;
@@ -233,7 +241,7 @@ main {
   transition: background .18s, border-color .18s, transform .18s;
   height: 360px;
 }
-.card:hover { border-color: #d6d0bd; }
+.card:hover { border-color: var(--border-hover); }
 .card:hover {
   background: var(--card-hover);
   transform: translateY(-2px);
