@@ -98,43 +98,20 @@ function formatRepoId(id) {
   return `<span class="owner">${escapeHTML(owner)}</span><span class="slash">/</span>${escapeHTML(repo)}`;
 }
 
-const STICKER_FALLBACKS = ["s-mint", "s-lemon", "s-sky", "s-pink", "s-peach", "s-lilac", "s-olive"];
-function stickerFor(item, idx) {
-  const rank = item.rank || (idx + 1);
-  const isRising = (item.badges || []).some(b => b.includes("Rising"));
-  const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
-  const isKor = (item.badges || []).some(b => b.includes("한국어"));
-
-  if (isNew) return { color: "s-mint", top: "NEW", bottom: "신상" };
-  if (isRising && rank === 1) return { color: "s-coral", top: "#01", bottom: "HOT" };
-  if (isRising && rank <= 3) return { color: "s-lemon", top: `#0${rank}`, bottom: "급상승" };
-  if (rank === 1) return { color: "s-lemon", top: "#01", bottom: "대세" };
-  if (isKor) return { color: "s-sky", top: "KR", bottom: "한국어" };
-  if (isRising) return { color: "s-pink", top: "HOT", bottom: "화제" };
-  return { color: STICKER_FALLBACKS[idx % STICKER_FALLBACKS.length], top: "#" + String(rank).padStart(2,"0"), bottom: "PICK" };
-}
-
 function rowHTML(item, idx) {
   const rank = item.rank || (idx + 1);
   const rankStr = String(rank).padStart(2, "0");
-  const badges = (item.badges || []).slice(0, 2).map(b =>
+  const badges = (item.badges || []).slice(0, 1).map(b =>
     `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
   ).join("");
-  const isFeatured = idx === 0;
-  const maxFeats = isFeatured ? 4 : 3;
-  const feats = (item.key_features || []).slice(0, maxFeats).map(f =>
+  const feats = (item.key_features || []).slice(0, 3).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   const safeId = escapeHTML(item.id || "");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
-  const st = stickerFor(item, idx);
   return `
     <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="card-rank">RANK #${rankStr}</div>
-      <div class="sticker ${st.color}">
-        <strong>${escapeHTML(st.top)}</strong>
-        ${escapeHTML(st.bottom)}
-      </div>
+      <div class="card-rank">${rankStr}</div>
       <div class="card-head">
         <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
         <div class="head-meta">
@@ -147,14 +124,13 @@ function rowHTML(item, idx) {
       ${feats ? `<ul class="features">${feats}</ul>` : ""}
       <div class="card-foot">
         <div class="meta-left">
-          <div class="stars-line">★ ${formatStars(item.stars)}</div>
+          <span class="stars-line">★ ${formatStars(item.stars)}</span>
           ${badges ? `<div class="badges">${badges}</div>` : ""}
         </div>
         <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-          GITHUB <span class="arrow">→</span>
+          GitHub <span class="arrow">→</span>
         </a>
       </div>
-      <div class="card-hint">클릭해서 자세히</div>
     </article>
   `;
 }
@@ -172,7 +148,7 @@ function modalHTML(item, idx) {
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   return `
-    <div class="m-rank"># ${STATE.tab}/${String(rank).padStart(2,"0")}</div>
+    <div class="m-rank">${STATE.tab} / ${String(rank).padStart(2,"0")}</div>
     <div class="m-head">
       <img class="m-avatar" src="${escapeHTML(avatar)}" alt="" onerror="this.style.visibility='hidden'"/>
       <div class="m-meta">
@@ -183,14 +159,14 @@ function modalHTML(item, idx) {
     </div>
     <h2>${escapeHTML(item.title_ko || item.id)}</h2>
     ${item.catchphrase ? `<div class="m-catch">${escapeHTML(item.catchphrase)}</div>` : ""}
-    ${badges ? `<div class="m-section"><div class="m-label">badges</div><div class="m-badges">${badges}</div></div>` : ""}
-    ${item.summary_ko ? `<div class="m-section"><div class="m-label">description</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
-    ${feats ? `<div class="m-section"><div class="m-label">features</div><ul class="m-features">${feats}</ul></div>` : ""}
-    ${item.use_case ? `<div class="m-section"><div class="m-label">when_to_use</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
-    ${item.install_hint ? `<div class="m-section"><div class="m-label">install</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
-    ${tags ? `<div class="m-section"><div class="m-label">tags</div><div class="m-tags">${tags}</div></div>` : ""}
+    ${badges ? `<div class="m-section"><div class="m-label">배지</div><div class="m-badges">${badges}</div></div>` : ""}
+    ${item.summary_ko ? `<div class="m-section"><div class="m-label">요약</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
+    ${feats ? `<div class="m-section"><div class="m-label">핵심 기능</div><ul class="m-features">${feats}</ul></div>` : ""}
+    ${item.use_case ? `<div class="m-section"><div class="m-label">이럴 때 쓰세요</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
+    ${item.install_hint ? `<div class="m-section"><div class="m-label">설치</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
+    ${tags ? `<div class="m-section"><div class="m-label">태그</div><div class="m-tags">${tags}</div></div>` : ""}
     <a class="m-cta" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
-      open on github <span class="m-cta-arrow">↗</span>
+      GitHub에서 열기 →
     </a>
   `;
 }

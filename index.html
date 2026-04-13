@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -26,22 +26,18 @@
 <div class="statusbar">
   <div class="statusbar-inner">
     <span class="seg live">LIVE</span>
-    <span class="seg"><span class="key">issue</span><span class="arrow">·</span><span class="val">n°<span id="issue-no">01</span></span></span>
-    <span class="seg"><span class="key">last run</span><span class="arrow">·</span><span id="topbar-updated">—</span></span>
+    <span class="seg"><span class="val">이슈 n°<span id="issue-no">01</span></span></span>
+    <span class="seg">업데이트 <span id="topbar-updated">—</span></span>
     <span class="spacer"></span>
-    <span class="seg"><a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">github ↗</a></span>
+    <span class="seg"><a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">GitHub ↗</a></span>
   </div>
 </div>
 
 <header class="hero">
   <div class="hero-label">Issue n°<span id="issue-no-2">01</span> — weekly</div>
-  <h1>
-    이번 주 Claude Code에서<br/>
-    뭐가 <em class="hl-mint">뜨고</em>,<br/>
-    뭐가 이미 <em class="hl-lemon">자리잡았나</em>.
-  </h1>
+  <h1>이번 주 Claude Code에서<br/>뭐가 뜨고, 뭐가 자리잡았나.</h1>
   <p class="subtitle">
-    GitHub과 개발자 커뮤니티(<em>HN · Reddit · dev.to · GeekNews · velog</em>)에서 에이전트 · 스킬 · 하네스 · MCP를 긁어 주관 섞어 뽑은 주간 인덱스.
+    GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 에이전트 · 스킬 · 하네스 · MCP를 훑어 정리한 주간 인덱스.
   </p>
   <div class="hero-stats" aria-hidden="true">
     <span><strong id="out-rising">0</strong> rising</span>
@@ -88,14 +84,13 @@
       </button>
     </div>
     <div class="search-wrap">
-      <span class="search-prompt">/</span>
-      <input type="search" id="search" placeholder="filter by name, tag, repo..." aria-label="search" />
-      <span class="kbd">/</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="search" placeholder="프로젝트, 태그, 저장소 검색" aria-label="search" />
     </div>
   </div>
   <div class="filter-row" id="category-filter">
-    <span class="label">--category</span>
-    <button data-cat="all" class="chip active">all</button>
+    <span class="label">카테고리</span>
+    <button data-cat="all" class="chip active">전체</button>
     <button data-cat="agent" class="chip">agent</button>
     <button data-cat="skill" class="chip">skill</button>
     <button data-cat="harness" class="chip">harness</button>
@@ -112,25 +107,15 @@
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-panel" role="dialog" aria-modal="true">
-    <div class="modal-titlebar">
-      <div class="dots"><span></span><span></span><span></span></div>
-      <div class="path" id="modal-path">~/cc-trends/detail</div>
-      <button class="modal-close" data-close aria-label="close">✕</button>
-    </div>
+    <button class="modal-close" data-close aria-label="close">✕</button>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
 <footer>
-  <div class="foot-left">
-    <span class="foot-brand">cc-trends</span>
-    <span>주간 수집 · 수동 큐레이션</span>
-    <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">source ↗</a>
-  </div>
-  <div class="foot-shortcuts">
-    <span><span class="kbd">/</span> 검색</span>
-    <span><span class="kbd">esc</span> 닫기</span>
-  </div>
+  <span class="foot-brand">cc-trends</span>
+  <span>주간 수집 · 수동 큐레이션</span>
+  <a href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">Source ↗</a>
 </footer>
 
 <script src="app.js"></script>
