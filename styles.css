@@ -40,6 +40,25 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 88px 32px 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.hero-main { min-width: 0; }
+.hero-art {
+  width: clamp(160px, 22vw, 240px);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  animation: gentle-spin 60s linear infinite;
+}
+@keyframes gentle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 24px; }
+  .hero-art { width: 120px; justify-self: end; order: -1; margin-bottom: -24px; }
 }
 .brand-chip {
   display: inline-flex;
