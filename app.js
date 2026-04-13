@@ -74,7 +74,7 @@ function cardHTML(item) {
   `;
 }
 
-function modalHTML(item) {
+function modalHTML(item, tab, rank) {
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
   const tags = (item.tags || []).map(t =>
     `<span class="m-tag">${escapeHTML(t)}</span>`
@@ -82,7 +82,21 @@ function modalHTML(item) {
   const feats = (item.key_features || []).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
+  const badges = (item.badges || []).map(b => {
+    let cls = "";
+    if (b.includes("Rising")) cls = "b-rising";
+    else if (b.includes("Classic")) cls = "b-classic";
+    return `<span class="m-badge ${cls}">${escapeHTML(b)}</span>`;
+  }).join("");
+  const tabLabel = tab === "rising" ? "이번 주 뜨는" : "이미 유명한";
+  const rankStr = String(rank).padStart(2, "0");
+
   return `
+    <div class="m-rank">
+      <span class="accent">${tabLabel}</span>
+      <span class="dot-sep">·</span>
+      <span>#${rankStr}</span>
+    </div>
     <div class="m-head">
       <img class="m-avatar" src="${escapeHTML(avatar)}" alt="" onerror="this.style.visibility='hidden'"/>
       <div class="m-meta">
@@ -93,27 +107,34 @@ function modalHTML(item) {
     </div>
     <h2>${escapeHTML(item.title_ko || item.id)}</h2>
     ${item.catchphrase ? `<p class="m-catch">${escapeHTML(item.catchphrase)}</p>` : ""}
-    ${item.summary_ko ? `<div class="m-section"><div class="m-label">소개</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
+    ${badges ? `<div class="m-badges">${badges}</div>` : ""}
+    ${item.summary_ko ? `<div class="m-section"><div class="m-label">어떤 프로젝트인가</div><p class="m-summary">${escapeHTML(item.summary_ko)}</p></div>` : ""}
     ${feats ? `<div class="m-section"><div class="m-label">핵심 기능</div><ul class="m-features">${feats}</ul></div>` : ""}
-    ${item.use_case ? `<div class="m-section"><div class="m-label">이럴 때 쓰세요</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
-    ${item.install_hint ? `<div class="m-section"><div class="m-label">설치</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
+    ${item.use_case ? `<div class="m-section"><div class="m-label">이럴 때 쓰면 좋아요</div><div class="m-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
+    ${item.install_hint ? `<div class="m-section"><div class="m-label">설치 · 시작하기</div><div class="m-install">${escapeHTML(item.install_hint)}</div></div>` : ""}
     ${tags ? `<div class="m-section"><div class="m-label">태그</div><div class="m-tags">${tags}</div></div>` : ""}
-    <a class="m-cta" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
-      GitHub에서 열기 →
-    </a>
+    <div class="m-cta-row">
+      <a class="m-cta" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener">
+        GitHub에서 열기 →
+      </a>
+    </div>
   `;
 }
 
 function findItem(id) {
   const d = STATE.data || {};
-  return (d.rising || []).find(x => x.id === id) || (d.classic || []).find(x => x.id === id);
+  const rIdx = (d.rising || []).findIndex(x => x.id === id);
+  if (rIdx >= 0) return { item: d.rising[rIdx], tab: "rising", rank: rIdx + 1 };
+  const cIdx = (d.classic || []).findIndex(x => x.id === id);
+  if (cIdx >= 0) return { item: d.classic[cIdx], tab: "classic", rank: cIdx + 1 };
+  return null;
 }
 
 function openModal(id) {
-  const item = findItem(id);
-  if (!item) return;
+  const hit = findItem(id);
+  if (!hit) return;
   const modal = document.getElementById("modal");
-  document.getElementById("modal-body").innerHTML = modalHTML(item);
+  document.getElementById("modal-body").innerHTML = modalHTML(hit.item, hit.tab, hit.rank);
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
