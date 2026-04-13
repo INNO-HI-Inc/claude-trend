@@ -56,19 +56,55 @@ function formatRepoId(id) {
   return `<span class="owner">${escapeHTML(owner)}</span><span class="slash">/</span>${escapeHTML(repo)}`;
 }
 
-function cardHTML(item) {
+const STICKER_FALLBACKS = ["s-mint", "s-lemon", "s-sky", "s-pink", "s-peach", "s-lilac"];
+function stickerFor(item, idx) {
+  const rank = idx + 1;
+  const isRising = (item.badges || []).some(b => b.includes("Rising"));
+  const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
+  const isKor = (item.badges || []).some(b => b.includes("한국어"));
+
+  if (isNew) return { color: "s-mint", top: "NEW", bottom: "신상" };
+  if (isRising && rank === 1) return { color: "s-coral", top: "#01", bottom: "TOP" };
+  if (isRising && rank <= 3) return { color: "s-lemon", top: "#0" + rank, bottom: "급상승" };
+  if (rank === 1) return { color: "s-lemon", top: "#01", bottom: "대세" };
+  if (isKor) return { color: "s-sky", top: "KR", bottom: "한국어" };
+  if (isRising) return { color: "s-pink", top: "HOT", bottom: "화제" };
+  return { color: STICKER_FALLBACKS[idx % STICKER_FALLBACKS.length], top: "#" + String(rank).padStart(2,"0"), bottom: "PICK" };
+}
+
+function cardHTML(item, idx) {
   const safeId = escapeHTML(item.id || "");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
+  const rank = idx + 1;
+  const rankStr = String(rank).padStart(2, "0");
+  const isFeatured = idx === 0;
+  const maxFeats = isFeatured ? 4 : 3;
+  const feats = (item.key_features || []).slice(0, maxFeats).map(f =>
+    `<li>${escapeHTML(f)}</li>`
+  ).join("");
+  const st = stickerFor(item, idx);
   return `
     <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
+      <div class="card-rank">RANK #${rankStr}</div>
+      <div class="sticker ${st.color}">
+        <strong>${escapeHTML(st.top)}</strong>
+        ${escapeHTML(st.bottom)}
+      </div>
       <div class="card-head">
         <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
-        <div class="category-label">${escapeHTML(item.category || "")}</div>
+        <div class="head-meta">
+          <div class="category-label">${escapeHTML(item.category || "")}</div>
+          <div class="repo-id">${formatRepoId(item.id)}</div>
+        </div>
       </div>
       <h3>${escapeHTML(item.title_ko || item.id)}</h3>
       ${item.catchphrase ? `<p class="catch">${escapeHTML(item.catchphrase)}</p>` : ""}
+      ${feats ? `<ul class="features">${feats}</ul>` : ""}
       <div class="card-foot">
-        <span class="stars-line">★ ${formatStars(item.stars)}</span>
+        <span class="meta-left"><span class="stars-line">★ ${formatStars(item.stars)}</span></span>
+        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          GITHUB <span class="arrow">→</span>
+        </a>
       </div>
     </article>
   `;
@@ -155,7 +191,7 @@ function render() {
   if (list.length === 0) {
     el.innerHTML = `<div class="empty">검색 결과 없음</div>`;
   } else {
-    el.innerHTML = list.map(cardHTML).join("");
+    el.innerHTML = list.map((it, i) => cardHTML(it, i)).join("");
   }
 }
 
