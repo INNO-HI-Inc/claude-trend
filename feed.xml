@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cc-trends — Claude Code 도구 주간 인덱스</title>
+    <link>https://inno-hi-inc.github.io/claude-trend/</link>
+    <atom:link href="https://inno-hi-inc.github.io/claude-trend/feed.xml" rel="self" type="application/rss+xml" />
+    <description>매주 월요일 갱신되는 Claude Code 에이전트 · 스킬 · 하네스 · MCP 큐레이션.</description>
+    <language>ko</language>
+    <lastBuildDate>Mon, 13 Apr 2026 16:51:30 GMT</lastBuildDate>
+    <ttl>10080</ttl>
+    <item>
+      <title>cc-trends · 2026-04-13 주간 업데이트</title>
+      <link>https://inno-hi-inc.github.io/claude-trend/?w=2026-04-13</link>
+      <guid isPermaLink="false">cc-trends-2026-04-13</guid>
+      <pubDate>Mon, 13 Apr 2026 16:51:30 GMT</pubDate>
+      <description>&lt;p&gt;&lt;strong&gt;2026-04-13 업데이트&lt;/strong&gt; · 총 24개 프로젝트.&lt;/p&gt;&lt;h3&gt;이번 주 뜨는 Top 5&lt;/h3&gt;&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/santifer/career-ops&quot;&gt;&lt;strong&gt;AI 취업 자동화 시스템&lt;/strong&gt;&lt;/a&gt; — URL 하나면 평가부터 이력서까지 한방에 &lt;em&gt;(santifer/career-ops · ★32023)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/safishamsi/graphify&quot;&gt;&lt;strong&gt;코드를 지식그래프로&lt;/strong&gt;&lt;/a&gt; — 쿼리당 토큰 71배 절감, 코드베이스를 그래프로 검색 &lt;em&gt;(safishamsi/graphify · ★24115)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/JuliusBrussee/caveman&quot;&gt;&lt;strong&gt;토큰 65% 절약 스킬&lt;/strong&gt;&lt;/a&gt; — 원시인처럼 말해도 코드 품질은 그대로 &lt;em&gt;(JuliusBrussee/caveman · ★22749)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/garrytan/gstack&quot;&gt;&lt;strong&gt;YC CEO의 AI 팀 셋업&lt;/strong&gt;&lt;/a&gt; — CEO부터 QA까지, 6명의 전문가를 터미널에 &lt;em&gt;(garrytan/gstack · ★70944)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/slavingia/skills&quot;&gt;&lt;strong&gt;린 창업 스킬 세트&lt;/strong&gt;&lt;/a&gt; — Gumroad 창업자의 창업 10단계를 AI 스킬로 &lt;em&gt;(slavingia/skills · ★7784)&lt;/em&gt;&lt;/li&gt;&lt;/ol&gt;&lt;h3&gt;이미 유명한 (Top 3)&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/anthropics/claude-code&quot;&gt;CC 공식 에이전트&lt;/a&gt; — 터미널에 사는 코딩 에이전트, 생태계의 시작점 &lt;em&gt;(★113171)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/affaan-m/everything-claude-code&quot;&gt;하네스 올인원 최적화&lt;/a&gt; — 181개 스킬, 47개 서브에이전트, 하네스 끝판왕 &lt;em&gt;(★153281)&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://github.com/modelcontextprotocol/servers&quot;&gt;MCP 공식 서버 모음&lt;/a&gt; — AI에 외부 도구를 연결하는 표준, MCP의 허브 &lt;em&gt;(★83611)&lt;/em&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href=&quot;https://inno-hi-inc.github.io/claude-trend/&quot;&gt;전체 인덱스 보기&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
