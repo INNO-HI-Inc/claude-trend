@@ -99,7 +99,7 @@ function cardHTML(item, idx) {
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   return `
-    <article class="card${isFeatured ? " featured" : ""}" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
+    <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
       <div class="sticker ${st.color}">
         <strong>${escapeHTML(st.top)}</strong>
         ${escapeHTML(st.bottom)}
