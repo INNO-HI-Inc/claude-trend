@@ -265,4 +265,66 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
 });
 
+const CRITERIA_HTML = `
+  <h2 style="font-size:28px;margin-bottom:8px">순위는 어떻게 매겨지나요?</h2>
+  <p class="m-catch">4가지 축의 가중 점수로 매주 다시 계산합니다.</p>
+
+  <div class="m-section">
+    <div class="m-label">최종 공식</div>
+    <div class="m-install">score = 0.4×velocity + 0.3×buzz + 0.2×quality + 0.1×recency</div>
+  </div>
+
+  <div class="m-section">
+    <div class="m-label">평가 4축</div>
+    <ul class="m-features">
+      <li><strong>Velocity (40%)</strong> — GitHub 7일 stars 증가 속도. 신상(30일 이내)이면 연령 보정 적용.</li>
+      <li><strong>Community Buzz (30%)</strong> — HN, Reddit, dev.to, GeekNews, velog 언급의 가중 합. 다중 플랫폼 동시 언급 +15, 프론트페이지 도달 +10.</li>
+      <li><strong>Quality (20%)</strong> — README 깊이, 라이선스, 최근 커밋, 테스트/예제, CI, 문서화.</li>
+      <li><strong>Recency (10%)</strong> — 최근 커밋이 얼마나 따끈한지 (60일 이상 방치면 0점).</li>
+    </ul>
+  </div>
+
+  <div class="m-section">
+    <div class="m-label">Rising vs Classic 분기</div>
+    <div class="m-usecase" style="background:var(--hl-mint);margin-bottom:10px">
+      <strong>🔥 Rising</strong> · 다음 중 하나면 충족<br/>
+      · 생성 30일 이내<br/>
+      · velocity ≥ 60 + 최근 14일 커뮤니티 언급 3건+<br/>
+      · HN/Reddit 프론트페이지 최근 7일 내 도달
+    </div>
+    <div class="m-usecase" style="background:var(--hl-lemon)">
+      <strong>⭐ Classic</strong> · 모두 충족해야 함<br/>
+      · stars ≥ 500<br/>
+      · 생성 60일 경과<br/>
+      · 최근 30일 내 커밋 존재<br/>
+      <em style="font-size:13px;color:var(--muted)">둘 다 해당되면 Rising 우선 (신선도 가산)</em>
+    </div>
+  </div>
+
+  <div class="m-section">
+    <div class="m-label">편향 보정</div>
+    <ul class="m-features">
+      <li>한국어 README·블로그 가산점 <strong>+10 buzz</strong> (영어권 규모 차이 보정)</li>
+      <li>Anthropic 공식·임직원 프로젝트는 'official' 태그만 부여, 점수는 동일</li>
+    </ul>
+  </div>
+
+  <div class="m-section">
+    <div class="m-label">선정 결과</div>
+    <p class="m-summary">각 섹션 상위 12개 선별, 동점은 updated_at 최신순. 채점 미달 후보는 pending으로 다음 주 재검토.</p>
+  </div>
+
+  <a class="m-cta" href="https://github.com/INNO-HI-Inc/claude-trend" target="_blank" rel="noopener">소스 코드 보기 →</a>
+`;
+
+function openCriteria() {
+  const modal = document.getElementById("modal");
+  document.getElementById("modal-body").innerHTML = CRITERIA_HTML;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  modal.scrollTop = 0;
+}
+document.getElementById("open-criteria").addEventListener("click", openCriteria);
+
 load();

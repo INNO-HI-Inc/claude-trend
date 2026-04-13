@@ -702,12 +702,19 @@ footer {
   color: var(--muted);
 }
 footer .foot-brand { color: var(--ink); font-weight: 700; }
-footer a {
+footer a, footer .foot-link {
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px dotted var(--soft);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
-footer a:hover { color: var(--accent); border-color: var(--accent); }
+footer a:hover, footer .foot-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 @media (max-width: 640px) {
   .hero { padding: 64px 20px 40px; }
