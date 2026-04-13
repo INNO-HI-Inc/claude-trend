@@ -95,48 +95,11 @@ function cardHTML(item, idx) {
   const isFeatured = idx === 0;
   const st = stickerFor(item, idx);
 
-  if (isFeatured) {
-    const feats = (item.key_features || []).slice(0, 5).map(f =>
-      `<li>${escapeHTML(f)}</li>`
-    ).join("");
-    return `
-      <article class="card featured" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-        <div class="pick-label">이번 주 PICK</div>
-        <div class="sticker ${st.color}">
-          <strong>${escapeHTML(st.top)}</strong>
-          ${escapeHTML(st.bottom)}
-        </div>
-        <div class="featured-left">
-          <div class="card-head">
-            <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
-            <div class="head-meta">
-              <div class="category-label">${escapeHTML(item.category || "")}</div>
-              <div class="repo-id">${formatRepoId(item.id)}</div>
-            </div>
-          </div>
-          <h3>${escapeHTML(item.title_ko || item.id)}</h3>
-          ${item.catchphrase ? `<p class="catch">${escapeHTML(item.catchphrase)}</p>` : ""}
-          ${item.summary_ko ? `<p class="featured-summary">${escapeHTML(item.summary_ko)}</p>` : ""}
-          <div class="card-foot">
-            <span class="meta-left"><span class="stars-line">★ ${formatStars(item.stars)}</span></span>
-            <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-              GITHUB <span class="arrow">→</span>
-            </a>
-          </div>
-        </div>
-        <div class="featured-right">
-          ${feats ? `<div class="featured-block"><div class="featured-label">핵심 기능</div><ul class="features">${feats}</ul></div>` : ""}
-          ${item.use_case ? `<div class="featured-block"><div class="featured-label">이럴 때 쓰면 좋아요</div><div class="featured-usecase">${escapeHTML(item.use_case)}</div></div>` : ""}
-        </div>
-      </article>
-    `;
-  }
-
   const feats = (item.key_features || []).slice(0, 3).map(f =>
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   return `
-    <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
+    <article class="card${isFeatured ? " featured" : ""}" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
       <div class="sticker ${st.color}">
         <strong>${escapeHTML(st.top)}</strong>
         ${escapeHTML(st.bottom)}
