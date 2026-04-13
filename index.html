@@ -24,7 +24,14 @@
 
 <header class="hero">
   <h1>이번 주 Claude Code에서<br/>뭐가 <em class="hl-mint">뜨고</em>, 뭐가 이미 <em class="hl-lemon">자리잡았나</em>.</h1>
-  <p class="subtitle">GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 에이전트 · 스킬 · 하네스 · MCP를 모아 정리합니다. <strong id="updated-inline">매주 갱신</strong>.</p>
+  <p class="subtitle">GitHub과 개발자 커뮤니티(HN, Reddit, dev.to, GeekNews, velog)에서 에이전트 · 스킬 · 하네스 · MCP를 모아 정리합니다.</p>
+  <div class="hero-inline">
+    <span><strong id="inline-total">0</strong>개 프로젝트</span>
+    <span class="dot">·</span>
+    <span><strong id="inline-rising">0</strong>개 급상승</span>
+    <span class="dot">·</span>
+    <span id="inline-updated">매주 월요일 갱신</span>
+  </div>
 </header>
 
 <nav class="controls">
@@ -39,6 +46,11 @@
 </nav>
 
 <main>
+  <div class="section-head">
+    <h2 id="section-title">이번 주 뜨는</h2>
+    <p id="section-desc">최근 30일 급상승한 프로젝트와 이번 주 커뮤니티에서 회자되는 것들</p>
+    <span class="section-count" id="section-count">0</span>
+  </div>
   <div class="grid" id="grid"></div>
 </main>
 

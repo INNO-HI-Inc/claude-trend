@@ -17,11 +17,35 @@ async function load() {
 
 function updateMeta() {
   const d = STATE.data || {};
-  const el = document.getElementById("updated-inline");
-  if (el && d.generated_at) {
+  const rising = d.rising || [];
+  const classic = d.classic || [];
+  const total = rising.length + classic.length;
+  const totalEl = document.getElementById("inline-total");
+  const risingEl = document.getElementById("inline-rising");
+  if (totalEl) totalEl.textContent = total;
+  if (risingEl) risingEl.textContent = rising.length;
+  const updEl = document.getElementById("inline-updated");
+  if (updEl && d.generated_at) {
     const t = new Date(d.generated_at);
     const dateStr = `${t.getFullYear()}.${String(t.getMonth()+1).padStart(2,"0")}.${String(t.getDate()).padStart(2,"0")}`;
-    el.textContent = `${dateStr} 업데이트`;
+    updEl.textContent = `${dateStr} 업데이트 · 매주 월요일`;
+  }
+}
+
+const TAB_META = {
+  rising: { title: "이번 주 뜨는", desc: "최근 30일 급상승한 프로젝트와 커뮤니티에서 회자되는 것들" },
+  classic: { title: "이미 유명한", desc: "꾸준히 언급되고 레퍼런스로 자리잡은 필수 프로젝트" },
+};
+function updateSectionHead() {
+  const m = TAB_META[STATE.tab] || TAB_META.rising;
+  const title = document.getElementById("section-title");
+  const desc = document.getElementById("section-desc");
+  const count = document.getElementById("section-count");
+  if (title) title.textContent = m.title;
+  if (desc) desc.textContent = m.desc;
+  if (count) {
+    const d = STATE.data || {};
+    count.textContent = (d[STATE.tab] || []).length;
   }
 }
 
@@ -83,9 +107,10 @@ function cardHTML(item, idx) {
     `<li>${escapeHTML(f)}</li>`
   ).join("");
   const st = stickerFor(item, idx);
+  const isPick = idx === 0;
   return `
     <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="card-rank">RANK #${rankStr}</div>
+      ${isPick ? `<div class="pick-label">이번 주 PICK</div>` : `<div class="card-rank">RANK #${rankStr}</div>`}
       <div class="sticker ${st.color}">
         <strong>${escapeHTML(st.top)}</strong>
         ${escapeHTML(st.bottom)}
@@ -188,6 +213,7 @@ function render() {
   const d = STATE.data || {};
   const list = (d[STATE.tab] || []).filter(matches);
   const el = document.getElementById("grid");
+  updateSectionHead();
   if (list.length === 0) {
     el.innerHTML = `<div class="empty">검색 결과 없음</div>`;
   } else {
