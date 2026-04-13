@@ -318,7 +318,7 @@ main {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--ink);
+  color: var(--accent);
 }
 .repo-id {
   font-size: 11.5px;
@@ -345,7 +345,7 @@ main {
 .catch {
   font-size: 13.5px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--ink-2);
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -353,7 +353,6 @@ main {
   overflow: hidden;
   min-height: calc(1.5em * 2);
 }
-.grid .card:nth-child(1) .catch { color: var(--ink-2); font-size: 15px; }
 
 .features {
   list-style: none; padding: 0;
