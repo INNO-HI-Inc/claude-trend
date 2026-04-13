@@ -111,6 +111,7 @@ function cardHTML(item, idx) {
       <h3>${escapeHTML(item.title_ko || item.id)}</h3>
       ${item.catchphrase ? `<p class="catch">${escapeHTML(item.catchphrase)}</p>` : ""}
       ${feats ? `<ul class="features">${feats}</ul>` : ""}
+      ${sourcesLine(item)}
       <div class="card-foot">
         <span class="meta-left"><span class="stars-line">★ ${formatStars(item.stars)}</span></span>
         <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
@@ -119,6 +120,20 @@ function cardHTML(item, idx) {
       </div>
     </article>
   `;
+}
+
+const SOURCE_LABEL = {
+  github: "GitHub", hn: "HN", reddit: "Reddit",
+  devto: "dev.to", geeknews: "GeekNews", velog: "velog",
+  twitter: "X", x: "X", anthropic: "Anthropic",
+};
+function sourcesLine(item) {
+  const srcs = (item.sources || []).slice(0, 5);
+  const score = item.trend_score;
+  if (!srcs.length && score == null) return "";
+  const chips = srcs.map(s => `<span class="src-chip">${escapeHTML(SOURCE_LABEL[s] || s)}</span>`).join("");
+  const scoreEl = (score != null) ? `<span class="src-score" title="검증 점수">검증 ${score}</span>` : "";
+  return `<div class="src-line">${chips}${scoreEl}</div>`;
 }
 
 function modalHTML(item, tab, rank) {
@@ -166,6 +181,34 @@ function modalHTML(item, tab, rank) {
       </a>
     </div>
   `;
+}
+
+function modalSourcesSection(item) {
+  const srcs = (item.sources || []);
+  const evi = (item.evidence || []);
+  const score = item.trend_score;
+  if (!srcs.length && !evi.length && score == null) return "";
+
+  let html = `<div class="m-section"><div class="m-label">출처 · 검증</div>`;
+  if (score != null) {
+    html += `<div class="m-score-box">검증 점수 <strong>${score}</strong> / 100<span class="m-score-formula">velocity · buzz · quality · recency 종합</span></div>`;
+  }
+  if (srcs.length) {
+    const chips = srcs.map(s => `<span class="src-chip">${escapeHTML(SOURCE_LABEL[s] || s)}</span>`).join("");
+    html += `<div class="m-src-row"><span class="m-src-label">수집 출처</span><div class="m-src-chips">${chips}</div></div>`;
+  }
+  if (evi.length) {
+    html += `<ul class="m-evidence">`;
+    for (const e of evi) {
+      const label = escapeHTML(e.label || e.source || "");
+      const src = escapeHTML(SOURCE_LABEL[e.source] || e.source || "");
+      const url = e.url || "";
+      html += `<li><span class="src-chip">${src}</span> ${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${label} ↗</a>` : label}</li>`;
+    }
+    html += `</ul>`;
+  }
+  html += `</div>`;
+  return html;
 }
 
 function findItem(id) {

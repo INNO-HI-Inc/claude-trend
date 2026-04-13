@@ -449,12 +449,105 @@ main {
   text-overflow: ellipsis;
 }
 
+.src-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  margin-top: 2px;
+}
+.src-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--card-hover);
+  color: var(--muted);
+  border-radius: 100px;
+  letter-spacing: 0;
+}
+.src-score {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: var(--ink);
+  color: var(--card);
+  border-radius: 100px;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+
 .card-foot {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: auto;
   gap: 10px;
   padding-top: 14px;
 }
+
+/* modal source/evidence */
+.m-score-box {
+  padding: 16px 18px;
+  background: var(--ink);
+  color: var(--card);
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.m-score-box strong {
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+.m-score-formula {
+  font-size: 11.5px;
+  color: var(--soft);
+  margin-left: auto;
+}
+.m-src-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.m-src-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.m-src-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+.m-evidence {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.m-evidence li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--pill);
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.m-evidence a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--soft);
+}
+.m-evidence a:hover { color: var(--accent); border-color: var(--accent); }
 .meta-left {
   display: flex;
   align-items: center;
