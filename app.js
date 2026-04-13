@@ -41,7 +41,10 @@ function updateMeta() {
     tb.textContent = dateStr;
     const epoch = new Date("2026-01-05T00:00:00Z").getTime();
     const weeks = Math.max(1, Math.floor((t.getTime() - epoch) / (7 * 24 * 3600 * 1000)) + 1);
-    document.getElementById("issue-no").textContent = String(weeks).padStart(2, "0");
+    const issue = String(weeks).padStart(2, "0");
+    document.getElementById("issue-no").textContent = issue;
+    const issue2 = document.getElementById("issue-no-2");
+    if (issue2) issue2.textContent = issue;
   } else {
     tb.textContent = "—";
   }
@@ -95,27 +98,63 @@ function formatRepoId(id) {
   return `<span class="owner">${escapeHTML(owner)}</span><span class="slash">/</span>${escapeHTML(repo)}`;
 }
 
+const STICKER_FALLBACKS = ["s-mint", "s-lemon", "s-sky", "s-pink", "s-peach", "s-lilac", "s-olive"];
+function stickerFor(item, idx) {
+  const rank = item.rank || (idx + 1);
+  const isRising = (item.badges || []).some(b => b.includes("Rising"));
+  const isNew = (item.badges || []).some(b => b.includes("신상") || b.includes("7일"));
+  const isKor = (item.badges || []).some(b => b.includes("한국어"));
+
+  if (isNew) return { color: "s-mint", top: "NEW", bottom: "신상" };
+  if (isRising && rank === 1) return { color: "s-coral", top: "#01", bottom: "HOT" };
+  if (isRising && rank <= 3) return { color: "s-lemon", top: `#0${rank}`, bottom: "급상승" };
+  if (rank === 1) return { color: "s-lemon", top: "#01", bottom: "대세" };
+  if (isKor) return { color: "s-sky", top: "KR", bottom: "한국어" };
+  if (isRising) return { color: "s-pink", top: "HOT", bottom: "화제" };
+  return { color: STICKER_FALLBACKS[idx % STICKER_FALLBACKS.length], top: "#" + String(rank).padStart(2,"0"), bottom: "PICK" };
+}
+
 function rowHTML(item, idx) {
   const rank = item.rank || (idx + 1);
   const rankStr = String(rank).padStart(2, "0");
-  const badges = (item.badges || []).slice(0, 3).map(b =>
-    `<span class="tag ${badgeClass(b)}">${escapeHTML(b)}</span>`
+  const badges = (item.badges || []).slice(0, 2).map(b =>
+    `<span class="badge ${badgeClass(b)}">${escapeHTML(b)}</span>`
+  ).join("");
+  const isFeatured = idx === 0;
+  const maxFeats = isFeatured ? 4 : 3;
+  const feats = (item.key_features || []).slice(0, maxFeats).map(f =>
+    `<li>${escapeHTML(f)}</li>`
   ).join("");
   const safeId = escapeHTML(item.id || "");
   const avatar = item.thumbnail_url || `https://github.com/${(item.id || "").split("/")[0]}.png`;
+  const st = stickerFor(item, idx);
   return `
-    <article class="row" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
-      <div class="row-rank">${rankStr}</div>
-      <img class="row-avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
-      <div class="row-repo">
-        <div class="id">${formatRepoId(item.id)}</div>
-        <div class="title">${escapeHTML(item.title_ko || item.id)}</div>
+    <article class="card" data-id="${safeId}" tabindex="0" role="button" aria-label="${escapeHTML(item.title_ko || item.id)} 상세 보기">
+      <div class="card-rank">RANK #${rankStr}</div>
+      <div class="sticker ${st.color}">
+        <strong>${escapeHTML(st.top)}</strong>
+        ${escapeHTML(st.bottom)}
       </div>
-      <div class="row-catch">${escapeHTML(item.catchphrase || item.summary_ko || "")}</div>
-      <div class="row-stars">${formatStars(item.stars)}<span class="unit">★</span></div>
-      <div class="row-category">${escapeHTML(item.category || "")}</div>
-      <div class="row-tags">${badges}</div>
-      <div class="row-open">→</div>
+      <div class="card-head">
+        <img class="avatar" src="${escapeHTML(avatar)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"/>
+        <div class="head-meta">
+          <div class="category-label">${escapeHTML(item.category || "")}</div>
+          <div class="repo-id">${formatRepoId(item.id)}</div>
+        </div>
+      </div>
+      <h3>${escapeHTML(item.title_ko || item.id)}</h3>
+      ${item.catchphrase ? `<p class="catch">${escapeHTML(item.catchphrase)}</p>` : ""}
+      ${feats ? `<ul class="features">${feats}</ul>` : ""}
+      <div class="card-foot">
+        <div class="meta-left">
+          <div class="stars-line">★ ${formatStars(item.stars)}</div>
+          ${badges ? `<div class="badges">${badges}</div>` : ""}
+        </div>
+        <a class="repo-link" href="${escapeHTML(item.official_url || "#")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          GITHUB <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card-hint">👆 클릭해서 자세히</div>
     </article>
   `;
 }
@@ -187,7 +226,7 @@ function closeModal() {
 function render() {
   const d = STATE.data || {};
   const list = (d[STATE.tab] || []).filter(matches);
-  const el = document.getElementById("list");
+  const el = document.getElementById("grid");
   if (list.length === 0) {
     el.innerHTML = `<div class="empty">no results — try a different query</div>`;
   } else {
@@ -220,12 +259,13 @@ document.querySelectorAll("#category-filter .chip").forEach(btn => {
   });
 });
 
-document.getElementById("list").addEventListener("click", e => {
-  const row = e.target.closest(".row");
-  if (row) openModal(row.dataset.id);
+document.getElementById("grid").addEventListener("click", e => {
+  if (e.target.closest(".repo-link")) return;
+  const card = e.target.closest(".card");
+  if (card) openModal(card.dataset.id);
 });
-document.getElementById("list").addEventListener("keydown", e => {
-  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("row")) {
+document.getElementById("grid").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card")) {
     e.preventDefault();
     openModal(e.target.dataset.id);
   }
