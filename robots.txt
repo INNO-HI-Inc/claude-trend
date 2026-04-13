@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://inno-hi-inc.github.io/claude-trend/sitemap.xml
